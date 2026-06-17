@@ -1,0 +1,3140 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代凤娇 2026 视觉设计作品集</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="assets/vendor/three.min.js"></script>
+    <style>
+        :root {
+            --void: #050505;
+            --panel: #0b0b0b;
+            --panel-2: #111;
+            --stark: #f7f7f2;
+            --soft: #bdbdb6;
+            --muted: #73736d;
+            --line: rgba(255, 255, 255, 0.1);
+            --line-soft: rgba(255, 255, 255, 0.055);
+            --accent: #d8c7ad;
+            --rose: #d9a7af;
+            --green: #889276;
+            --max: 1440px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--stark);
+            background: var(--void);
+            font-family: Inter, "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: geometricPrecision;
+        }
+
+        img,
+        video {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        ::selection {
+            background: var(--stark);
+            color: var(--void);
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a4a45;
+            border-radius: 999px;
+        }
+
+        .mono {
+            font-family: "Space Mono", "SFMono-Regular", Consolas, monospace;
+        }
+
+        .display {
+            font-family: Syne, "Arial Black", Impact, "Microsoft YaHei", sans-serif;
+        }
+
+        .serif {
+            font-family: "Cormorant Garamond", Georgia, "Times New Roman", "Songti SC", serif;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-size: 44px 44px;
+            background-image:
+                linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.82) 58%, transparent 100%);
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.18;
+            mix-blend-mode: screen;
+            background-image:
+                radial-gradient(circle at 17% 23%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+                radial-gradient(circle at 81% 41%, rgba(255,255,255,0.05) 0 1px, transparent 1px);
+            background-size: 11px 13px, 17px 19px;
+        }
+
+        #webgl-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .cursor-dot,
+        .cursor-ring {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: #fff;
+        }
+
+        .cursor-ring {
+            width: 38px;
+            height: 38px;
+            border: 1px solid rgba(255, 255, 255, 0.52);
+            transition: width 240ms ease, height 240ms ease, border-color 240ms ease;
+        }
+
+        body.is-hovering .cursor-ring {
+            width: 66px;
+            height: 66px;
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .site-shell {
+            position: relative;
+            z-index: 5;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 18px;
+            left: 24px;
+            right: 24px;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            color: rgba(247, 247, 242, 0.9);
+            pointer-events: none;
+        }
+
+        .brand-lockup,
+        .nav-pill {
+            pointer-events: auto;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        .brand-lockup strong {
+            font-size: 25px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .brand-lockup span {
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .nav-pill {
+            border: 1px solid var(--line);
+            background: rgba(6, 6, 6, 0.58);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 8px;
+            border-radius: 999px;
+        }
+
+        .nav-pill a,
+        .nav-pill button {
+            display: inline-flex;
+            align-items: center;
+            min-height: 34px;
+            padding: 0 14px;
+            border-radius: 999px;
+            color: var(--soft);
+            border: 0;
+            background: transparent;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: color 180ms ease, background 180ms ease;
+        }
+
+        .nav-pill a:hover,
+        .nav-pill button:hover {
+            color: var(--void);
+            background: var(--stark);
+        }
+
+        .audio-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-right: 8px;
+            border-radius: 50%;
+            background: #d85252;
+            box-shadow: 0 0 14px rgba(216, 82, 82, 0.7);
+        }
+
+        .polarity {
+            width: 36px;
+            min-width: 36px;
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,0.46);
+            border-radius: 50%;
+        }
+
+        .polarity::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--stark);
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            align-items: stretch;
+            padding: 96px 6vw 36px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero::before {
+            content: "FENGJIAO";
+            position: absolute;
+            left: -5vw;
+            top: 13vh;
+            z-index: -1;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            font: 800 clamp(6rem, 17vw, 18.5rem)/0.85 Syne, Arial, sans-serif;
+            letter-spacing: 0;
+            opacity: 0.68;
+            white-space: nowrap;
+        }
+
+        .hero::after {
+            content: "PORTFOLIO";
+            position: absolute;
+            right: -10vw;
+            bottom: 16vh;
+            z-index: -1;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.18);
+            font: 800 clamp(4.8rem, 14vw, 15rem)/0.85 Syne, Arial, sans-serif;
+            opacity: 0.5;
+            white-space: nowrap;
+        }
+
+        .hero-inner {
+            width: min(100%, var(--max));
+            margin: 0 auto;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: calc(100vh - 132px);
+        }
+
+        .hero-status {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .hero-main {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.55fr);
+            align-items: end;
+            gap: 42px;
+            padding: 15vh 0 7vh;
+        }
+
+        .hero-title {
+            margin: 0;
+            max-width: 980px;
+            font-size: clamp(4.6rem, 11.5vw, 13.5rem);
+            line-height: 0.78;
+            letter-spacing: 0.035em;
+            text-transform: uppercase;
+        }
+
+        .hero-title .cn {
+            display: block;
+            margin-top: 22px;
+            font-family: "Songti SC", "SimSun", "Noto Serif SC", serif;
+            font-weight: 400;
+            font-size: clamp(2.7rem, 7.2vw, 7.5rem);
+            letter-spacing: 0.08em;
+            color: var(--stark);
+        }
+
+        .hero-copy {
+            max-width: 430px;
+            justify-self: end;
+            padding-bottom: 8px;
+        }
+
+        .hero-copy .eyebrow,
+        .section-eyebrow,
+        .case-eyebrow {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+        }
+
+        .hero-copy p {
+            margin: 24px 0 28px;
+            color: var(--soft);
+            font-size: 15px;
+            line-height: 1.85;
+        }
+
+        .hero-tags,
+        .footer-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 0 12px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--soft);
+            background: rgba(255, 255, 255, 0.025);
+            font-size: 10px;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .hero-footer {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: end;
+            gap: 24px;
+            padding-top: 22px;
+            border-top: 1px solid var(--line);
+        }
+
+        .chapter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chapter-tabs a,
+        .chapter-tabs button {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 18px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 6px;
+            color: var(--soft);
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+        }
+
+        .chapter-tabs a:first-child,
+        .chapter-tabs a:hover,
+        .chapter-tabs button.active,
+        .chapter-tabs button:hover {
+            background: var(--stark);
+            color: var(--void);
+            border-color: var(--stark);
+        }
+
+        .ticker {
+            max-width: 390px;
+            overflow: hidden;
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .ticker span {
+            display: inline-block;
+            animation: ticker 18s linear infinite;
+        }
+
+        @keyframes ticker {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .hero-metrics {
+            display: grid;
+            justify-items: end;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .force-control {
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .force-control button {
+            width: 24px;
+            height: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.48);
+            border-radius: 4px;
+            color: var(--stark);
+            background: rgba(255, 255, 255, 0.02);
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .force-control button:hover {
+            background: var(--stark);
+            color: var(--void);
+        }
+
+        .depth-word-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .depth-projected-word {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.24);
+            font-family: "Syne", Arial, sans-serif;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            line-height: 0.8;
+            text-transform: uppercase;
+            white-space: nowrap;
+            opacity: 0.62;
+            transform-origin: center;
+            will-change: transform, opacity;
+        }
+
+        .mono-cover {
+            position: relative;
+            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+            background: transparent;
+            isolation: isolate;
+        }
+
+        .mono-cover::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background:
+                linear-gradient(to bottom, rgba(5, 5, 5, 0.18), transparent 28%, rgba(5, 5, 5, 0.28)),
+                radial-gradient(circle at 52% 38%, rgba(255, 255, 255, 0.035), transparent 32%);
+        }
+
+        .mono-scroll-detector {
+            position: absolute;
+            inset: 0;
+            z-index: 9;
+            display: none;
+            overflow-y: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mono-scroll-detector > div {
+            height: 600vh;
+        }
+
+        .mono-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 32px 48px;
+            background: #050505;
+            color: #fff;
+            transition: opacity 1000ms ease, transform 1000ms ease, visibility 1000ms ease;
+        }
+
+        .mono-loader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-18px);
+            pointer-events: none;
+        }
+
+        .mono-loader-top,
+        .mono-loader-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            color: rgba(255, 255, 255, 0.42);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+        }
+
+        .mono-loader-main h1 {
+            margin: 0 0 8px;
+            font-size: clamp(3.4rem, 8vw, 8rem);
+            line-height: 0.88;
+            letter-spacing: -0.04em;
+        }
+
+        .mono-loader-main p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: clamp(1.3rem, 2.8vw, 2.7rem);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .mono-loader-line {
+            position: relative;
+            width: 192px;
+            height: 1px;
+            margin-top: 32px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #loader-bar {
+            width: 0;
+            height: 100%;
+            background: #fff;
+        }
+
+        #loader-percent {
+            font-family: Syne, Arial, sans-serif;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: clamp(3rem, 7vw, 7rem);
+            line-height: 0.85;
+            font-weight: 300;
+        }
+
+        .mono-cover-ui {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 40px 34px;
+            pointer-events: none;
+        }
+
+        .mono-cover-head,
+        .mono-cover-center,
+        .mono-cover-foot {
+            pointer-events: none;
+        }
+
+        .mono-cover-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .mono-cover-brand,
+        .mono-cover-controls,
+        .mono-cover-modes,
+        .mono-cover-force {
+            pointer-events: auto;
+        }
+
+        .mono-cover-brand {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .mono-cover-brand > a {
+            color: var(--stark);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .mono-cover-status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: rgba(247, 247, 242, 0.42);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .mono-cover-status span {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #10b981;
+            animation: pulseDot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 0.35; transform: scale(0.86); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .mono-cover-controls {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        #btn-audio {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 30px;
+            padding: 0 12px;
+            border: 1px solid currentColor;
+            border-radius: 999px;
+            color: var(--stark);
+            background: transparent;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            transition: background 300ms ease, color 300ms ease;
+        }
+
+        #btn-audio:hover {
+            background: var(--stark);
+            color: var(--void);
+        }
+
+        #audio-status-icon {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #ef4444;
+        }
+
+        #audio-status-icon.is-on {
+            background: #10b981;
+        }
+
+        #btn-theme {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border: 1px solid currentColor;
+            border-radius: 999px;
+            color: var(--stark);
+            background: transparent;
+            transition: transform 300ms ease;
+        }
+
+        #btn-theme:hover {
+            transform: scale(1.06);
+        }
+
+        #btn-theme span {
+            width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            background: currentColor;
+        }
+
+        .mono-cover-center {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 44px;
+        }
+
+        .mono-cover-title-block {
+            max-width: 390px;
+        }
+
+        .mono-cover-title-block > span {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(247, 247, 242, 0.42);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+        }
+
+        .mono-cover-title-block h1 {
+            margin: 0;
+            color: var(--stark);
+            font-size: clamp(3rem, 7vw, 7rem);
+            font-weight: 800;
+            line-height: 0.86;
+            letter-spacing: -0.06em;
+            text-transform: uppercase;
+            pointer-events: auto;
+            transition: text-decoration 300ms ease;
+        }
+
+        .mono-cover-title-block h1:hover {
+            text-decoration: line-through;
+        }
+
+        .mono-cover-title-block p {
+            margin: 18px 0 0;
+            color: rgba(247, 247, 242, 0.72);
+            font-size: 16px;
+            line-height: 1.72;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .mono-cover-hud {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+            max-width: 320px;
+            color: rgba(247, 247, 242, 0.72);
+            text-align: right;
+        }
+
+        .mono-cover-hud .mono {
+            color: rgba(247, 247, 242, 0.62);
+            font-size: 10px;
+            line-height: 1.7;
+            letter-spacing: 0.08em;
+        }
+
+        .mono-cover-hud i {
+            display: block;
+            width: 96px;
+            height: 1px;
+            background: currentColor;
+            opacity: 0.3;
+        }
+
+        .mono-cover-hud p {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.55;
+            font-style: italic;
+        }
+
+        .mono-cover-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mono-cover-modes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .mono-cover-modes a,
+        .mono-cover-modes button {
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            color: var(--stark);
+            background: transparent;
+            font-size: 12px;
+            transition: background 300ms ease, color 300ms ease, border-color 300ms ease;
+        }
+
+        .mono-cover-modes a:first-child,
+        .mono-cover-modes a:hover,
+        .mono-cover-modes button.active,
+        .mono-cover-modes button:hover {
+            background: var(--stark);
+            color: var(--void);
+            border-color: var(--stark);
+        }
+
+        .mono-cover-marquee {
+            position: relative;
+            width: min(33vw, 460px);
+            height: 24px;
+            overflow: hidden;
+            color: rgba(247, 247, 242, 0.42);
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            white-space: nowrap;
+        }
+
+        .mono-cover-marquee span {
+            display: inline-block;
+            animation: ticker 18s linear infinite;
+        }
+
+        .mono-cover-force {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(247, 247, 242, 0.9);
+            font-size: 12px;
+        }
+
+        .mono-cover-force > span {
+            color: rgba(247, 247, 242, 0.42);
+        }
+
+        .mono-cover-force button {
+            width: 24px;
+            height: 24px;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            color: var(--stark);
+            background: transparent;
+            transition: opacity 200ms ease, background 200ms ease, color 200ms ease;
+        }
+
+        .mono-cover-force button:hover {
+            background: var(--stark);
+            color: var(--void);
+        }
+
+        .mono-depth-source {
+            display: none;
+        }
+
+        .mono-qr-card {
+            width: 148px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(5, 5, 5, 0.68);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .mono-qr-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.12);
+            mix-blend-mode: screen;
+        }
+
+        .mono-qr-card span {
+            display: block;
+            margin-top: 9px;
+            color: rgba(247, 247, 242, 0.62);
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .section {
+            position: relative;
+            padding: 112px 6vw;
+            border-bottom: 1px solid var(--line);
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.018), transparent 280px),
+                rgba(5, 5, 5, 0.96);
+        }
+
+        .homepage-motion {
+            position: relative;
+            min-height: 100vh;
+            padding: 0;
+            border-bottom: 1px solid var(--line);
+            background: #050505;
+            overflow: hidden;
+        }
+
+        .homepage-motion-inner {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .homepage-motion-head {
+            position: absolute;
+            left: 40px;
+            right: 40px;
+            bottom: 34px;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 28px;
+            margin-bottom: 0;
+            pointer-events: none;
+        }
+
+        .homepage-motion-head h2 {
+            margin: 0;
+            font-size: clamp(2.4rem, 7vw, 7.5rem);
+            line-height: 0.88;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .homepage-motion-frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border: 0;
+            padding: 0;
+            background: #0b0b0b;
+            cursor: none;
+        }
+
+        .homepage-motion-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.05) saturate(0.92);
+        }
+
+        .homepage-motion::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 38%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.28), transparent 30%);
+        }
+
+        .section-inner {
+            width: min(100%, var(--max));
+            margin: 0 auto;
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+            gap: 40px;
+            align-items: end;
+            margin-bottom: 46px;
+        }
+
+        .section-title {
+            margin: 12px 0 0;
+            font-size: clamp(2.5rem, 6vw, 6.5rem);
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .section-note {
+            margin: 0;
+            color: var(--soft);
+            font-size: 14px;
+            line-height: 1.85;
+        }
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .visual-cell {
+            position: relative;
+            min-height: 0;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            isolation: isolate;
+            grid-column: auto;
+        }
+
+        .visual-cell.wide {
+            grid-column: auto;
+            min-height: 0;
+        }
+
+        .visual-cell.tall {
+            grid-column: auto;
+            min-height: 0;
+        }
+
+        .visual-cell img,
+        .visual-cell .gif-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.8) contrast(1.05);
+            transition: transform 850ms cubic-bezier(0.16, 1, 0.3, 1), filter 850ms ease;
+        }
+
+        .visual-cell:hover img,
+        .visual-cell:hover .gif-thumb {
+            transform: scale(1.055);
+            filter: saturate(1.02) contrast(1.08);
+        }
+
+        .visual-cell::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.82), transparent 58%);
+            z-index: 1;
+            opacity: 0.72;
+            transition: opacity 240ms ease;
+        }
+
+        .visual-cell:hover::after {
+            opacity: 0.42;
+        }
+
+        .cell-label {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 14px;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            color: rgba(247, 247, 242, 0.86);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .project-list {
+            position: relative;
+            border-top: 1px solid var(--line);
+        }
+
+        .project-row {
+            min-height: 132px;
+            display: grid;
+            grid-template-columns: 92px minmax(0, 1fr) 220px 58px;
+            gap: 24px;
+            align-items: center;
+            padding: 26px 0;
+            border-bottom: 1px solid var(--line);
+            transition: padding-left 280ms ease, background 280ms ease;
+        }
+
+        .project-row:hover {
+            padding-left: 18px;
+            background: rgba(255, 255, 255, 0.018);
+        }
+
+        .project-row .num {
+            color: var(--soft);
+            font-size: 14px;
+            letter-spacing: 0.2em;
+        }
+
+        .project-row h3 {
+            margin: 0;
+            color: rgba(247, 247, 242, 0.72);
+            font-size: clamp(1.9rem, 4.2vw, 4.8rem);
+            line-height: 0.95;
+            font-weight: 400;
+            transition: color 240ms ease, transform 240ms ease;
+        }
+
+        .project-row:hover h3 {
+            color: var(--stark);
+            transform: translateX(8px);
+        }
+
+        .project-row p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            line-height: 1.65;
+            text-transform: uppercase;
+        }
+
+        .project-row .role {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .arrow-link {
+            width: 52px;
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.018);
+            color: var(--stark);
+            font-size: 22px;
+            transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+        }
+
+        .project-row:hover .arrow-link {
+            background: var(--stark);
+            color: var(--void);
+            transform: rotate(45deg);
+        }
+
+        .hover-preview {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            z-index: 75;
+            width: min(360px, 28vw);
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.86);
+            transition: opacity 220ms ease, transform 220ms ease;
+            pointer-events: none;
+            background: var(--panel);
+        }
+
+        .hover-preview.is-active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .hover-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.04) saturate(1.02);
+        }
+
+        .hover-preview span {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            padding: 6px 8px;
+            border-radius: 5px;
+            color: var(--soft);
+            background: rgba(0, 0, 0, 0.68);
+            font-size: 9px;
+            letter-spacing: 0.14em;
+        }
+
+        .case-section {
+            position: relative;
+            background: var(--void);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .case-hero {
+            min-height: 86vh;
+            position: relative;
+            display: grid;
+            align-items: end;
+            padding: clamp(360px, 34vw, 560px) 6vw 56px;
+            overflow: hidden;
+        }
+
+        .case-hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 19 / 6;
+            object-fit: cover;
+            filter: contrast(1.06) brightness(0.72) saturate(1.04);
+            transform: scale(1.01);
+        }
+
+        .case-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top, rgba(0,0,0,0.94), transparent 62%),
+                linear-gradient(to bottom, rgba(0,0,0,0.18), transparent 32%),
+                linear-gradient(to right, rgba(0,0,0,0.78), transparent 58%);
+        }
+
+        .case-hero-content {
+            position: relative;
+            z-index: 2;
+            width: min(100%, var(--max));
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
+            align-items: end;
+            gap: 48px;
+        }
+
+        .case-kicker {
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+        }
+
+        .case-title {
+            margin: 18px 0 0;
+            max-width: 960px;
+            font-size: clamp(3.2rem, 8vw, 9rem);
+            line-height: 0.92;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .case-subtitle {
+            margin: 0;
+            color: var(--soft);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .case-meta {
+            display: grid;
+            gap: 14px;
+        }
+
+        .case-home-link {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            width: 100%;
+            margin-bottom: 18px;
+            padding: 0 18px;
+            border: 1px solid rgba(247, 247, 242, 0.42);
+            color: var(--stark);
+            background: rgba(0, 0, 0, 0.18);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: background 220ms ease, color 220ms ease, transform 220ms ease, border-color 220ms ease;
+        }
+
+        .case-home-link::after {
+            content: "↑";
+            width: 28px;
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            border: 1px solid currentColor;
+            border-radius: 50%;
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        .case-home-link:hover {
+            border-color: var(--stark);
+            background: var(--stark);
+            color: var(--void);
+            transform: translateY(-2px);
+        }
+
+        .meta-item {
+            display: grid;
+            gap: 6px;
+            padding-top: 13px;
+            border-top: 1px solid rgba(255,255,255,0.18);
+        }
+
+        .meta-item span {
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .meta-item strong {
+            color: var(--stark);
+            font-size: 13px;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        .case-body {
+            padding: 86px 6vw 112px;
+        }
+
+        .case-body-inner {
+            width: min(100%, var(--max));
+            margin: 0 auto;
+        }
+
+        .vi-strip {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+            gap: 28px;
+            align-items: stretch;
+            margin-bottom: 70px;
+        }
+
+        .vi-intro {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+            padding: 30px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(circle at 10% 0%, rgba(216, 199, 173, 0.08), transparent 32%),
+                var(--panel);
+        }
+
+        .vi-intro h4 {
+            margin: 18px 0 0;
+            font-size: clamp(2rem, 4vw, 4.4rem);
+            line-height: 0.96;
+            text-transform: uppercase;
+        }
+
+        .vi-intro p {
+            margin: 22px 0 0;
+            color: var(--soft);
+            font-size: 14px;
+            line-height: 1.85;
+        }
+
+        .vi-images {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .vi-images button,
+        .work-gallery button,
+        .motion-card button {
+            appearance: none;
+            padding: 0;
+            border: 0;
+            color: inherit;
+            background: transparent;
+            cursor: none;
+        }
+
+        .vi-images button {
+            min-height: 210px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: var(--panel);
+        }
+
+        .vi-images button:first-child {
+            grid-column: 1 / -1;
+            min-height: 320px;
+        }
+
+        .vi-images img,
+        .work-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1), filter 650ms ease;
+        }
+
+        .vi-images button:hover img,
+        .work-gallery button:hover img {
+            transform: scale(1.045);
+            filter: contrast(1.08);
+        }
+
+        .case-narrative {
+            display: grid;
+            grid-template-columns: minmax(230px, 0.36fr) minmax(0, 1fr);
+            gap: 56px;
+            margin-bottom: 68px;
+        }
+
+        .case-narrative h4 {
+            position: sticky;
+            top: 104px;
+            margin: 0;
+            color: var(--stark);
+            font-size: 13px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+        }
+
+        .narrative-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .narrative-item {
+            min-height: 190px;
+            padding: 24px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.018);
+        }
+
+        .narrative-item span {
+            color: var(--accent);
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .narrative-item p {
+            margin: 18px 0 0;
+            color: var(--soft);
+            font-size: 14px;
+            line-height: 1.85;
+        }
+
+        .case-highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin: -30px 0 70px;
+        }
+
+        .case-highlight-card {
+            min-height: 150px;
+            padding: 26px;
+            border: 1px solid rgba(247, 247, 242, 0.3);
+            background:
+                linear-gradient(135deg, rgba(247, 247, 242, 0.06), rgba(247, 247, 242, 0.012)),
+                rgba(255, 255, 255, 0.024);
+        }
+
+        .case-highlight-card span {
+            color: var(--accent);
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .case-highlight-card strong {
+            display: block;
+            margin-top: 18px;
+            color: var(--stark);
+            font-size: 16px;
+            line-height: 1.85;
+            font-weight: 800;
+        }
+
+        .work-gallery {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .detail-slice-board {
+            margin-top: 32px;
+            padding: 28px;
+            background: #f5f0ea;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            border: 1px solid rgba(255,255,255,0.16);
+        }
+
+        .detail-slice-board button {
+            padding: 0;
+            border: 0;
+            background: #12070c;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .detail-slice-board img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .work-gallery button {
+            position: relative;
+            grid-column: span 3;
+            min-height: 280px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: var(--panel);
+        }
+
+        .work-gallery button.wide {
+            grid-column: span 6;
+            min-height: 360px;
+        }
+
+        .work-gallery button.tall {
+            grid-column: span 3;
+            min-height: 520px;
+        }
+
+        .gallery-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            padding-top: 28px;
+            border-top: 1px solid var(--line);
+        }
+
+        .gallery-heading h4 {
+            margin: 0;
+            font-size: clamp(1.9rem, 4vw, 4.8rem);
+            line-height: 0.95;
+            text-transform: uppercase;
+        }
+
+        .gallery-heading p {
+            max-width: 440px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.75;
+        }
+
+        .motion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 40px;
+        }
+
+        .motion-card {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(230px, 0.55fr);
+            min-height: 330px;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            overflow: hidden;
+        }
+
+        .motion-card button {
+            overflow: hidden;
+            min-height: 330px;
+            aspect-ratio: 16 / 9;
+            background: #050505;
+        }
+
+        .motion-card.is-portrait {
+            grid-template-columns: minmax(220px, 0.7fr) minmax(230px, 0.55fr);
+        }
+
+        .motion-card.is-portrait button {
+            aspect-ratio: 9 / 16;
+            min-height: 520px;
+        }
+
+        .motion-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .motion-card.is-portrait img {
+            object-fit: contain;
+            background: #050505;
+        }
+
+        .motion-card div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 26px;
+            padding: 28px;
+        }
+
+        .motion-card span {
+            color: var(--accent);
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .motion-card p {
+            margin: 0;
+            color: var(--soft);
+            font-size: 13px;
+            line-height: 1.85;
+        }
+
+        .contact-section {
+            padding: 112px 6vw 70px;
+            background:
+                radial-gradient(circle at 78% 30%, rgba(216, 199, 173, 0.12), transparent 24%),
+                var(--void);
+        }
+
+        .contact-grid {
+            width: min(100%, var(--max));
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 0.46fr);
+            gap: 52px;
+            align-items: end;
+        }
+
+        .contact-title {
+            margin: 0;
+            font-size: clamp(3.5rem, 9vw, 10rem);
+            line-height: 0.82;
+            text-transform: uppercase;
+        }
+
+        .contact-title span {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.46);
+        }
+
+        .contact-panel {
+            display: grid;
+            gap: 18px;
+            padding: 28px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.024);
+        }
+
+        .contact-qr {
+            display: grid;
+            grid-template-columns: 128px minmax(0, 1fr);
+            gap: 18px;
+            align-items: center;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .contact-qr img {
+            width: 128px;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            filter: grayscale(1) contrast(1.08);
+        }
+
+        .contact-qr span {
+            color: var(--accent);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .contact-qr p {
+            margin: 10px 0 0;
+            color: var(--soft);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .contact-line {
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 18px;
+            align-items: baseline;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .contact-line span {
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .contact-line strong {
+            color: var(--stark);
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-home-link {
+            width: min(100%, 260px);
+            margin-top: 34px;
+        }
+
+        .footer-note {
+            width: min(100%, var(--max));
+            margin: 64px auto 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            border-top: 1px solid var(--line);
+            padding-top: 22px;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            place-items: center;
+            padding: 34px;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .lightbox.is-open {
+            display: grid;
+        }
+
+        .lightbox img {
+            max-width: min(96vw, 1500px);
+            max-height: 88vh;
+            object-fit: contain;
+            border: 1px solid var(--line);
+            background: var(--panel);
+        }
+
+        .lightbox button {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 46px;
+            height: 46px;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            color: var(--void);
+            background: var(--stark);
+            cursor: none;
+        }
+
+        @media (max-width: 1180px) {
+            .visual-cell,
+            .work-gallery button {
+                grid-column: span 4;
+            }
+
+            .visual-cell {
+                grid-column: auto;
+            }
+
+            .visual-cell.wide,
+            .work-gallery button.wide {
+                grid-column: span 8;
+            }
+
+            .visual-cell.wide,
+            .visual-cell.tall {
+                grid-column: auto;
+            }
+
+            .motion-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 860px) {
+            body {
+                cursor: auto;
+            }
+
+            .cursor-dot,
+            .cursor-ring,
+            .hover-preview {
+                display: none;
+            }
+
+            .mono-loader {
+                padding: 24px 20px;
+            }
+
+            .mono-loader-top,
+            .mono-loader-bottom {
+                font-size: 9px;
+            }
+
+            .mono-cover-ui {
+                padding: 24px 18px 20px;
+            }
+
+            .mono-cover-brand > a {
+                font-size: 14px;
+            }
+
+            .mono-cover-status,
+            .mono-cover-marquee {
+                display: none;
+            }
+
+            .mono-cover-hud {
+                position: absolute;
+                right: 18px;
+                top: 82px;
+                display: block;
+                max-width: 116px;
+            }
+
+            .mono-cover-hud .mono,
+            .mono-cover-hud > i,
+            .mono-cover-hud > p {
+                display: none;
+            }
+
+            .mono-qr-card {
+                width: 116px;
+            }
+
+            .mono-cover-controls {
+                gap: 14px;
+            }
+
+            #btn-audio {
+                min-height: 28px;
+                padding: 0 10px;
+                font-size: 9px;
+            }
+
+            #btn-theme {
+                width: 30px;
+                height: 30px;
+            }
+
+            .mono-cover-center {
+                align-items: center;
+            }
+
+            .mono-cover-title-block {
+                max-width: 100%;
+            }
+
+            .mono-cover-title-block h1 {
+                font-size: clamp(4rem, 18vw, 6.3rem);
+            }
+
+            .mono-cover-title-block p {
+                max-width: 340px;
+                font-size: 15px;
+            }
+
+            .mono-cover-foot {
+                display: grid;
+                gap: 12px;
+            }
+
+            .mono-cover-modes {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .mono-cover-modes a,
+            .mono-cover-modes button {
+                width: 100%;
+            }
+
+            .mono-cover-force {
+                justify-content: flex-end;
+            }
+
+            .topbar {
+                position: absolute;
+                left: 14px;
+                right: 14px;
+                top: 14px;
+            }
+
+            .brand-lockup {
+                padding: 10px 12px;
+            }
+
+            .brand-lockup strong {
+                font-size: 12px;
+            }
+
+            .brand-lockup span,
+            .hero-status div:nth-child(n+2),
+            .nav-pill,
+            .hero-metrics,
+            .ticker {
+                display: none;
+            }
+
+            .hero {
+                padding: 92px 18px 28px;
+            }
+
+            .hero-inner {
+                min-height: calc(100vh - 120px);
+            }
+
+            .hero-main,
+            .section-head,
+            .case-hero-content,
+            .vi-strip,
+            .case-narrative,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy {
+                justify-self: start;
+            }
+
+            .hero-footer {
+                grid-template-columns: 1fr;
+            }
+
+            .chapter-tabs a,
+            .chapter-tabs button {
+                flex: 1 1 100%;
+                justify-content: center;
+                min-height: 36px;
+                padding: 0 8px;
+                font-size: 9px;
+            }
+
+            .section,
+            .case-body,
+            .contact-section,
+            .homepage-motion {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .homepage-motion {
+                padding: 0;
+            }
+
+            .homepage-motion-head {
+                display: grid;
+                gap: 12px;
+                left: 18px;
+                right: 18px;
+                bottom: 22px;
+            }
+
+            .visual-grid,
+            .work-gallery,
+            .narrative-grid,
+            .case-highlight-grid,
+            .motion-card,
+            .vi-images,
+            .detail-slice-board {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-slice-board {
+                padding: 14px;
+                gap: 12px;
+            }
+
+            .visual-cell,
+            .visual-cell.wide,
+            .visual-cell.tall,
+            .work-gallery button,
+            .work-gallery button.wide,
+            .work-gallery button.tall,
+            .vi-images button,
+            .vi-images button:first-child {
+                grid-column: auto;
+                min-height: 280px;
+            }
+
+            .visual-cell,
+            .visual-cell.wide,
+            .visual-cell.tall {
+                min-height: 0;
+                aspect-ratio: 4 / 5;
+            }
+
+            .project-row {
+                grid-template-columns: 54px 1fr 46px;
+                gap: 14px;
+                min-height: 120px;
+            }
+
+            .project-row .role {
+                display: none;
+            }
+
+            .project-row h3 {
+                font-size: clamp(1.7rem, 9vw, 3.6rem);
+            }
+
+            .arrow-link {
+                width: 42px;
+                font-size: 18px;
+            }
+
+            .case-hero {
+                min-height: 72vh;
+                padding: clamp(150px, 34vw, 240px) 18px 42px;
+            }
+
+            .case-title {
+                font-size: clamp(2.7rem, 13vw, 5rem);
+            }
+
+            .case-home-link {
+                margin: 6px 0 18px;
+            }
+
+            .case-highlight-grid {
+                margin: -28px 0 54px;
+            }
+
+            .case-highlight-card {
+                min-height: auto;
+                padding: 22px;
+            }
+
+            .case-highlight-card strong {
+                font-size: 15px;
+            }
+
+            .case-narrative h4 {
+                position: static;
+            }
+
+            .motion-card {
+                min-height: auto;
+                min-width: 0;
+            }
+
+            .motion-card button {
+                width: 100%;
+                min-width: 0;
+                min-height: 0;
+                aspect-ratio: 16 / 9;
+            }
+
+            .motion-card.is-portrait button {
+                aspect-ratio: 9 / 16;
+            }
+
+            .contact-line {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .contact-qr {
+                grid-template-columns: 104px minmax(0, 1fr);
+            }
+
+            .contact-qr img {
+                width: 104px;
+            }
+
+            .footer-note {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 1ms !important;
+                scroll-behavior: auto !important;
+                transition-duration: 1ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+
+    <main id="top" class="site-shell">
+        <section class="mono-cover" aria-label="代鳳嬌视觉作品集封面">
+            <div class="mono-scroll-detector" id="scroll-detector" aria-hidden="true"><div></div></div>
+
+            <div id="loader" class="mono-loader" aria-hidden="true">
+                <div class="mono-loader-top mono">
+                    <span>SYS_INIT: PORTFOLIO_2026</span>
+                    <span>DESIGNER: DAI FENGJIAO</span>
+                </div>
+                <div class="mono-loader-main">
+                    <h1 class="display">DAI_FENGJIAO</h1>
+                    <p class="serif">Visual Design Portfolio / Brand Campaigns / AI Motion.</p>
+                    <div class="mono-loader-line"><div id="loader-bar"></div></div>
+                </div>
+                <div class="mono-loader-bottom mono">
+                    <div>[01] LOADING SELECTED WORKS<br>[02] BUILDING VISUAL SYSTEM<br>[03] RENDERING MOTION CASES</div>
+                    <span id="loader-percent">00%</span>
+                </div>
+            </div>
+
+            <div class="mono-cover-ui">
+                <header class="mono-cover-head">
+                    <div class="mono-cover-brand">
+                        <a href="#top" class="display hover-scramble hoverable" data-scramble="DAI">DAI</a>
+                        <div class="mono mono-cover-status">
+                            <span></span>
+                            <b>ONLINE PORTFOLIO: ACTIVE</b>
+                        </div>
+                    </div>
+                    <div class="mono-cover-controls mono">
+                        <button id="btn-audio" class="hoverable" type="button" aria-label="音频状态">
+                            <span id="audio-status-icon"></span>
+                            <span id="audio-status-text">AUDIO OFF</span>
+                        </button>
+                        <button id="btn-theme" class="hoverable" type="button" aria-label="切换黑白极性"><span></span></button>
+                    </div>
+                </header>
+
+                <div class="mono-cover-center">
+                    <div class="mono-cover-title-block">
+                        <span class="mono">[ CHAPTER. I ]</span>
+                        <h1 class="display hoverable">VISUAL</h1>
+                        <p class="serif">代鳳嬌 / 视觉设计师，聚焦品牌视觉、服装内容、电商详情与 AI 动态延展。</p>
+                    </div>
+                    <div class="mono-cover-hud">
+                        <div class="mono">
+                            <div>P_COUNT: <span id="hud-particles">0</span></div>
+                            <div>MATRIX_Z: <span id="hud-depth">0.00</span>m</div>
+                            <div>FPS: <span id="hud-fps">60</span></div>
+                        </div>
+                        <i></i>
+                        <p class="serif">Scroll downward to enter selected commercial visual systems.</p>
+                        <div class="mono-qr-card mono">
+                            <img src="assets/portfolio/wechat_contact_qr_square.jpg" alt="WeChat QR code">
+                            <span>WECHAT // DANA8888886</span>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="mono-cover-foot">
+                    <nav class="mono-cover-modes mono" aria-label="Case quick links">
+                        <a class="hoverable" href="#case-01">[01] FASHION WEEK</a>
+                        <a class="hoverable" href="#case-02">[02] CONTENT</a>
+                        <a class="hoverable" href="#case-03">[03] MANOIRS</a>
+                        <a class="hoverable" href="#case-04">[04] SKINCARE</a>
+                        <a class="hoverable" href="#case-05">[05] 3D PRODUCT</a>
+                    </nav>
+                    <div class="mono-cover-marquee mono" aria-hidden="true">
+                        <span>INTERACTIVE DIGITAL GEOMETRY SYSTEM // VISUAL PORTFOLIO 2026 // BRAND CAMPAIGN // E-COMMERCE DETAIL // AI MOTION // </span>
+                    </div>
+                    <div class="mono-cover-force mono">
+                        <span>CASE NAV:</span>
+                        <b>MOUSE DEPTH</b>
+                    </div>
+                </footer>
+            </div>
+
+            <div class="mono-depth-source" aria-hidden="true">
+                <span id="depth-word-1">FENGJIAO</span>
+                <span id="depth-word-2">SYSTEM</span>
+                <span id="depth-word-3">PORTFOLIO</span>
+                <span id="depth-word-4">VISUAL</span>
+            </div>
+        </section>
+
+        <section class="homepage-motion" aria-labelledby="homepage-motion-title">
+            <div class="homepage-motion-inner">
+                <div class="homepage-motion-head">
+                    <div>
+                        <span class="section-eyebrow mono">[ 16:9 MOTION LOOKBOOK ]</span>
+                        <h2 id="homepage-motion-title" class="display">FASHION LOOKBOOK</h2>
+                    </div>
+                    <p class="section-note">
+                        以粉色西装造型为视觉主线，呈现服装企划的模特状态、色彩氛围和动态传播方向。
+                    </p>
+                </div>
+                <button class="homepage-motion-frame hoverable" type="button" data-lightbox="assets/portfolio/homepage_lookbook_16x9.gif">
+                    <img src="assets/portfolio/homepage_lookbook_16x9.gif" alt="AI 结合产品做的模特 look book GIF">
+                </button>
+            </div>
+        </section>
+
+        <section id="archive" class="section" aria-labelledby="archive-title">
+            <div class="section-inner">
+                <div class="section-head">
+                    <div>
+                        <span class="section-eyebrow mono">[ ARCHIVE PROJECTS ]</span>
+                        <h2 id="archive-title" class="section-title display">案例索引 // CASE INDEX</h2>
+                    </div>
+                    <p class="section-note">
+                        这一段提取第三个网站截图里的“编号 + 文案 + 图片预览”表达方式，点击每个案例进入完整内容。
+                    </p>
+                </div>
+                <div id="project-list" class="project-list"></div>
+            </div>
+            <div id="hover-preview" class="hover-preview" aria-hidden="true">
+                <img src="" alt="">
+                <span class="mono">X_POS // <b id="preview-x">0</b></span>
+            </div>
+        </section>
+
+        <div id="case-container"></div>
+
+        <section id="selected-grid" class="section" aria-labelledby="grid-title">
+            <div class="section-inner">
+                <div class="section-head">
+                    <div>
+                        <span class="section-eyebrow mono">[ DAILY PRACTICE & EXTRA WORKS ]</span>
+                        <h2 id="grid-title" class="section-title display">练习作品 // DAILY WORKS</h2>
+                    </div>
+                    <p class="section-note">
+                        这里补充日常练习、建模渲染、包装和海报作品；主案例仍以前面的商业案例为核心。
+                    </p>
+                </div>
+                <div id="visual-grid" class="visual-grid"></div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section" aria-labelledby="contact-title">
+            <div class="contact-grid">
+                <div>
+                    <p class="case-kicker mono">[ BEYOND DESIGN ]</p>
+                    <h2 id="contact-title" class="contact-title display">LET'S<span>CONNECT</span></h2>
+                    <p class="section-note" style="max-width: 690px; margin-top: 28px;">
+                        我喜欢从服装、空间、影像和生活细节里观察审美秩序。设计对我来说不是单张画面的完成，而是把一个品牌在不同场景里的气质、信息和情绪整理成更清楚、更有记忆点的视觉表达。
+                    </p>
+                    <div class="footer-tags mono" style="margin-top: 28px;">
+                        <span class="tag">Photoshop</span>
+                        <span class="tag">Illustrator</span>
+                        <span class="tag">C4D</span>
+                        <span class="tag">Redshift</span>
+                        <span class="tag">Midjourney</span>
+                        <span class="tag">Stable Diffusion</span>
+                        <span class="tag">GPT</span>
+                        <span class="tag">AI Video</span>
+                    </div>
+                    <a class="case-home-link contact-home-link hoverable mono" href="#top" aria-label="返回首页">返回首页 / BACK HOME</a>
+                </div>
+                <div class="contact-panel">
+                    <div class="contact-qr">
+                        <img src="assets/portfolio/wechat_contact_qr_square.jpg" alt="WeChat QR code">
+                        <div>
+                            <span class="mono">WECHAT QR</span>
+                            <p>Scan QR to add WeChat / dana8888886.</p>
+                        </div>
+                    </div>
+                    <div class="contact-line">
+                        <span class="mono">Name</span>
+                        <strong>代凤娇</strong>
+                    </div>
+                    <div class="contact-line">
+                        <span class="mono">Phone</span>
+                        <strong>18345400838</strong>
+                    </div>
+                    <div class="contact-line">
+                        <span class="mono">Email</span>
+                        <strong>3129873198@qq.com</strong>
+                    </div>
+                    <div class="contact-line">
+                        <span class="mono">Wechat</span>
+                        <strong>dana8888886</strong>
+                    </div>
+                    <div class="contact-line">
+                        <span class="mono">Certified</span>
+                        <strong>花瓣认证设计师 / Pexels 认证摄影师</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-note mono">
+                <span>DAI FENGJIAO PORTFOLIO 2026</span>
+                <span>Visual Designer / Brand Campaign / AI-assisted Motion</span>
+            </div>
+        </section>
+    </main>
+
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
+        <button class="hoverable" type="button" aria-label="关闭预览">×</button>
+        <img src="" alt="">
+    </div>
+
+    <script>
+        const A = "assets/portfolio/";
+
+        const cases = [
+            {
+                id: "case-01",
+                index: "01",
+                label: "GUYUERIJI",
+                title: "深圳时装周全案视觉设计",
+                en: "Shenzhen Fashion Week Full Visual System",
+                time: "2024.10 - 2025.5",
+                role: "活动主视觉 / 现场物料 / 摄影修图",
+                hero: "case01_hero_motion_19x6.gif",
+                preview: "case01_vi_01.jpg",
+                summary: "两周内完成从活动主视觉到现场物料、屏幕视觉与摄影修图的完整落地。",
+                highlightWork: "我负责从活动主视觉方向到具体物料执行的完整视觉输出，包括主 KV、海报、展台/秀场屏幕、现场氛围物料，以及活动摄影和后期修图。项目中需要根据品牌服装风格、现场空间与传播场景快速统一视觉语言。",
+                highlightOutcome: "在有限时间内完成活动视觉的集中落地，保证线下空间、传播海报和活动回顾素材具有统一识别度，为品牌在时装周场景中的专业呈现提供支撑。",
+                viNote: "先用品牌 VI 和活动视觉建立识别，再展开现场、屏幕、物料与传播图，呈现服装品牌在线下活动中的统一视觉系统。",
+                vi: ["case01_vi_01.jpg", "case01_vi_02.jpg", "case01_vi_03.jpg", "case01_vi_04.jpg"],
+                meta: [
+                    ["Brand", "GUYUERIJI 古月日记"],
+                    ["Role", "视觉设计师 / 主要执行"],
+                    ["Deliverables", "主 KV、展台屏幕、活动海报、现场物料、活动摄影修图"]
+                ],
+                narrative: [
+                    ["Project Background", "GUYUERIJI 参与深圳时装周期间，需要在较短筹备周期内建立统一的活动视觉表达，让品牌的新中式气质能在线下现场、屏幕画面和传播素材中形成一致记忆点。"],
+                    ["Challenge", "任务周期紧、物料类型多，既要保证活动现场的完整落地，也要兼顾品牌调性、服装细节展示和后续传播素材的可复用性。"],
+                    ["My Role", "我负责从活动主视觉方向到具体物料执行的完整视觉输出，包括主 KV、海报、展台/秀场屏幕、现场氛围物料，以及活动摄影和后期修图。"],
+                    ["Deliverables", "主视觉 KV 用于活动传播和现场核心画面；延展物料覆盖海报、屏幕、展台与现场陈列；摄影修图用于活动回顾、小红书传播与作品集展示。"],
+                    ["Process", "先根据活动主题和新中式服装气质确定关键词，再提炼主视觉结构；随后把 KV 延展到不同尺寸和媒介中，并在活动后完成筛片、调色、精修与版式整合。"],
+                    ["Outcome", "在有限时间内完成活动视觉的集中落地，保证线下空间、传播海报和活动回顾素材具有统一识别度，为品牌在时装周场景中的专业呈现提供支撑。"]
+                ],
+                works: [
+                    ["case01_work_01.jpg", "wide"],
+                    ["case01_work_02.jpg", "wide"],
+                    ["case01_work_03.jpg", ""],
+                    ["case01_work_04.jpg", ""],
+                    ["case01_work_05.jpg", ""],
+                    ["case01_work_06.jpg", ""],
+                    ["case01_work_07.jpg", ""],
+                    ["case01_vi_05.jpg", "wide"]
+                ],
+                motion: []
+            },
+            {
+                id: "case-02",
+                index: "02",
+                label: "GUYUERIJI",
+                title: "新中式女装内容视觉系统",
+                en: "Fashion Content Visual System",
+                time: "2024.10 - 2025.5",
+                role: "拍摄修图 / 电商视觉 / 小红书内容",
+                hero: "case02_hero_motion_19x6.gif",
+                preview: "case02_portrait_04.jpg",
+                summary: "围绕拍摄、修图、电商页面、小红书内容与大促视觉，建立统一的线上品牌表达。",
+                highlightWork: "我参与并执行拍摄、修图、设计和视频后期，负责把模特大片、静物图、详情页、大促 KV 与小红书内容整合成更统一的视觉输出。",
+                highlightOutcome: "通过统一画面网感、排版节奏和内容封面策略，小红书笔记点击呈明显提升趋势，线上内容也更容易形成系列感和品牌识别。",
+                viNote: "同一品牌 VI 下继续延展线上内容系统，将模特大片、静物细节、电商页面、小红书视觉和 AI Lookbook 组织成可持续更新的内容资产。",
+                vi: ["case01_vi_01.jpg", "case01_vi_03.jpg", "case01_vi_05.jpg", "case02_online_06.jpg"],
+                meta: [
+                    ["Brand", "GUYUERIJI 古月日记"],
+                    ["Role", "拍摄、剪辑、设计、修图执行"],
+                    ["Deliverables", "模特大片、产品静物、详情页、大促 KV、小红书封面、AI Lookbook"]
+                ],
+                narrative: [
+                    ["Project Background", "品牌日常需要持续产出线上内容，覆盖电商店铺、产品详情页、大促活动、小红书种草与视频传播。相比单张海报，更重要的是让不同渠道素材保持统一的品牌气质。"],
+                    ["Challenge", "服装内容既要有审美，也要能服务转化；既要表现新中式服装的细节、面料和廓形，也要适配电商页面、小红书封面、短视频和促销视觉等不同平台。"],
+                    ["My Role", "我参与并执行拍摄、修图、设计和视频后期，负责把模特大片、静物图、详情页、大促 KV 与小红书内容整合成更统一的视觉输出。"],
+                    ["Deliverables", "线上主图与 banner 承担第一眼吸引；详情页负责服装卖点和穿搭场景说明；小红书视觉负责封面点击和内容氛围；视频后期负责提升内容动感。"],
+                    ["Process", "先围绕服装系列建立画面调性，再根据渠道拆分素材比例和版式。人像图重点处理肤色、服装质感和氛围；静物图重点处理面料、配饰和细节。"],
+                    ["Outcome", "通过统一画面网感、排版节奏和内容封面策略，小红书笔记点击呈明显提升趋势，线上内容也更容易形成系列感和品牌识别。"]
+                ],
+                works: [
+                    ["case02_portrait_01.jpg", "wide"],
+                    ["case02_portrait_02.jpg", "wide"],
+                    ["case02_portrait_03.jpg", ""],
+                    ["case02_portrait_04.jpg", ""],
+                    ["case02_portrait_05.jpg", "tall"],
+                    ["case02_portrait_06.jpg", "tall"],
+                    ["case02_still_01.jpg", "tall"],
+                    ["case02_still_02.jpg", "tall"],
+                    ["case02_online_01.jpg", "tall"],
+                    ["case02_online_02.jpg", "tall"],
+                    ["case02_online_06.jpg", "tall"],
+                    ["case02_ai_fashion_01.jpg", "tall"],
+                    ["case02_ai_fashion_02.jpg", "tall"],
+                    ["case02_ai_fashion_03.jpg", "tall"],
+                    ["case02_ai_fashion_04.jpg", "tall"],
+                    ["case02_ai_fashion_05.jpg", "tall"],
+                    ["case02_ai_fashion_06.jpg", "tall"],
+                    ["case02_ai_fashion_07.jpg", "tall"],
+                    ["case02_ai_fashion_08.jpg", "tall"],
+                    ["case02_ai_fashion_09.jpg", "tall"],
+                    ["case02_ai_fashion_10.jpg", "tall"],
+                    ["case02_ai_fashion_11.jpg", "tall"],
+                    ["case02_ai_fashion_12.jpg", "tall"],
+                    ["case02_ai_fashion_13.jpg", "tall"],
+                    ["case02_ai_fashion_14.jpg", "tall"],
+                    ["case02_ai_fashion_15.jpg", "tall"]
+                ],
+                motion: [
+                    ["motion_fashion_lookbook_01.gif", "AI Lookbook Extension", "用 AI 将服装静态图延展为短视频 Lookbook，作为前期方向测试和动态传播预演。"],
+                    ["motion_fashion_lookbook_02.gif", "AI Fashion Motion", "动态片段用于补充人物氛围、镜头节奏和服装表现力，最终仍由设计师筛选与修正。"]
+                ]
+            },
+            {
+                id: "case-03",
+                index: "03",
+                label: "MANOIRS",
+                title: "家居品牌从 0 到 1 视觉搭建",
+                en: "Home Brand Visual Foundation",
+                time: "2025.4 - 2025.11",
+                role: "品牌视觉 / 电商页面 / 小红书内容",
+                hero: "case03_hero_motion_19x6.gif",
+                preview: "case03_home_05.jpg",
+                summary: "为建筑公司旗下家居子品牌建立电商、小红书与基础品牌视觉体系。",
+                highlightWork: "我参与品牌视觉方向的建立，协助把品牌定位转化为可落地的电商页面、产品详情、营销素材和小红书内容。项目中需要兼顾建筑公司背景带来的空间审美，以及家居产品面向消费者的温度感和购买说服力。",
+                highlightOutcome: "从无到有完成家居品牌线上视觉基础，为品牌后续电商销售、小红书种草和与母公司业务联动提供可延展的视觉框架。",
+                viNote: "漫诺案例以 VI 和空间感作为主线，强调从品牌气质、材质氛围到电商页面结构的完整搭建。",
+                vi: ["case03_home_01.jpg", "case03_home_02.jpg", "case03_home_03.jpg", "case03_home_04.jpg"],
+                meta: [
+                    ["Brand", "Manoirs Gallery 漫诺"],
+                    ["Role", "视觉方向、电商内容、传播素材搭建"],
+                    ["Deliverables", "品牌基础视觉、电商页面、产品详情、小红书内容、场景化物料"]
+                ],
+                narrative: [
+                    ["Project Background", "漫诺是建筑公司旗下孵化的家居子品牌，产品覆盖家具、椅子、沙发、床品和家纺等生活空间品类。项目重点是从 0 到 1 建立消费者可理解和记住的家居品牌视觉。"],
+                    ["Challenge", "家居品牌需要同时表达空间感、材质感和生活方式。作为新品牌，前期缺少成熟资产，需要在品牌调性、电商页面、小红书内容和产品展示之间建立一致基础。"],
+                    ["My Role", "我参与品牌视觉方向的建立，协助把品牌定位转化为可落地的电商页面、产品详情、营销素材和小红书内容。"],
+                    ["Deliverables", "展示为三个层级：品牌识别与视觉调性、电商店铺和详情页结构、小红书内容与产品图。"],
+                    ["Process", "先整理产品品类、目标客群和空间气质，再建立色彩、字体、版式和图片风格基调；随后根据电商和小红书渠道拆分内容。"],
+                    ["Outcome", "从无到有完成家居品牌线上视觉基础，为品牌后续电商销售、小红书种草和与母公司业务联动提供可延展的视觉框架。"]
+                ],
+                works: [
+                    ["case03_home_01.jpg", "wide"],
+                    ["case03_home_02.jpg", "wide"],
+                    ["case03_home_03.jpg", "wide"],
+                    ["case03_home_04.jpg", "wide"],
+                    ["case03_home_05.jpg", "wide"],
+                    ["case03_home_06.jpg", "wide"],
+                    ["case03_home_07.jpg", "wide"],
+                    ["case03_home_08.jpg", "wide"]
+                ],
+                motion: []
+            },
+            {
+                id: "case-04",
+                index: "04",
+                label: "BSLR / BAOKOUCHI",
+                title: "私域护肤品牌质感视觉升级",
+                en: "Skincare Brand Visual Upgrade",
+                time: "Selected commercial works",
+                role: "产品 banner / 详情页 / 包装质感",
+                hero: "case04_hero_motion_19x6.gif",
+                preview: "case04_vi_02.jpg",
+                summary: "在微商/私域销售场景中重塑产品高级感、功效表达与电商视觉质感。",
+                highlightWork: "我负责产品主视觉、banner、详情页和功效表达的视觉优化，让产品卖点、包装质感和人物/使用场景之间形成更统一的表达。",
+                highlightOutcome: "在原有商业基础上完成质感升级，让产品图从单纯卖点堆叠转向更清晰、更有护肤品氛围的视觉表达，提升页面阅读感和品牌可信度。",
+                viNote: "护肤品案例先呈现粉嫩、柔光、包装系列感的 VI 开场，再展示详情页、功效表达、人物场景和产品质感图。",
+                vi: ["case04_vi_01.jpg", "case04_vi_02.jpg", "case04_vi_03.jpg", "case04_vi_04.jpg"],
+                meta: [
+                    ["Brand", "BSLR / BAOKOUCHI"],
+                    ["Role", "产品主视觉、详情页、功效卖点优化"],
+                    ["Deliverables", "护肤 banner、长详情页、包装展示、AI 模特/使用效果、私域传播素材"]
+                ],
+                narrative: [
+                    ["Project Background", "BSLR 与 BAOKOUCHI 属于私域和微商销售属性较强的护肤品牌，原有视觉基础较弱，但产品仍需要在详情页、banner 和传播图中建立更可信、更干净的护肤品质感。"],
+                    ["Challenge", "既不能脱离实际销售场景，又要弱化低质感信息堆叠，用更清晰的版式、更统一的色彩和更高级的产品呈现方式来提升品牌感。"],
+                    ["My Role", "我负责产品主视觉、banner、详情页和功效表达的视觉优化，让产品卖点、包装质感和人物/使用场景之间形成更统一的表达。"],
+                    ["Deliverables", "banner 用于第一眼塑造产品气质；详情页用于拆解功效、套盒和产品组合；包装展示强调产品系列感；私域传播图保持信息明确。"],
+                    ["Process", "先压缩复杂信息，把功效卖点转化为清晰视觉层级；再用干净背景、柔和光感、产品特写和人物场景强化高级感。"],
+                    ["Outcome", "在原有商业基础上完成质感升级，让产品图从单纯卖点堆叠转向更清晰、更有护肤品氛围的视觉表达。"]
+                ],
+                works: [
+                    ["case04_vi_05.jpg", "wide"],
+                    ["case04_vi_06.jpg", "wide"],
+                    ["case04_vi_07.jpg", "wide"],
+                    ["case04_vi_08.jpg", "wide"],
+                    ["case04_banner_07.jpg", "wide"],
+                    ["case04_banner_08.jpg", "wide"],
+                    ["case04_banner_01.jpg", "tall"],
+                    ["case04_banner_02.jpg", "tall"],
+                    ["case04_banner_03.jpg", "tall"],
+                    ["case04_banner_04.jpg", "tall"],
+                    ["case04_banner_05.jpg", "tall"],
+                    ["case04_banner_06.jpg", "tall"]
+                ],
+                detailSlices: ["case04_detail_slice_01.jpg", "case04_detail_slice_02.jpg", "case04_detail_slice_03.jpg", "case04_detail_slice_04.jpg"],
+                motion: []
+            },
+            {
+                id: "case-05",
+                index: "05",
+                label: "FULUN TECH",
+                title: "电子烟产品 3D 渲染与海外提案视觉",
+                en: "Electronic Product 3D Rendering",
+                time: "2023.3 - 2024.9",
+                role: "C4D 建模 / Redshift 渲染 / 海外提案",
+                hero: "case05_hero_motion_19x6.gif",
+                preview: "case05_render_05.jpg",
+                summary: "面向美国客户完成产品建模渲染、包装展示、卖点图与动态产品演示。",
+                highlightWork: "我负责产品建模渲染、提案视觉、海报、详情页、包装和运营图的设计输出。通过 3D 渲染把产品外观、材质和卖点转化为更适合客户评审和商业展示的视觉素材。",
+                highlightOutcome: "参与千万级商业产品视觉支持，为海外客户沟通、产品展示和线上运营提供稳定的 3D 视觉资产。",
+                viNote: "电子产品案例没有单独 VI 文件夹，因此以产品识别、包装和渲染主图作为品牌开场，展示产品结构、材质、光感和商业提案能力。",
+                vi: ["case05_render_05.jpg", "case05_render_01.jpg", "case05_render_08.jpg", "case05_render_10.jpg"],
+                meta: [
+                    ["Brand", "富伦科技有限公司"],
+                    ["Role", "产品渲染、提案策划、海报、详情页、包装、运营图"],
+                    ["Deliverables", "C4D 建模、Redshift 渲染、产品主图、包装展示、卖点图、AI 产品动态演示"]
+                ],
+                narrative: [
+                    ["Project Background", "富伦科技的电子烟产品需要面向美国客户进行展示和提案。相比普通海报，电子产品视觉更强调产品结构、材质、光感、包装完整度和卖点表达。"],
+                    ["Challenge", "电子烟产品体积小、材质细节多，视觉上既要有科技感，也要能清楚展示颜色、结构、包装和使用场景。"],
+                    ["My Role", "我负责产品建模渲染、提案视觉、海报、详情页、包装和运营图的设计输出，通过 3D 渲染把产品外观、材质和卖点转化为商业展示素材。"],
+                    ["Deliverables", "产品渲染用于核心展示；包装图用于客户提案和销售资料；卖点图用于说明功能、口味、结构和系列差异；运营图用于线上传播。"],
+                    ["Process", "先根据产品结构建立模型和材质，再通过灯光、角度和背景控制产品质感；随后把渲染图延展为海报、详情页和提案页面。"],
+                    ["Outcome", "参与千万级商业产品视觉支持，为海外客户沟通、产品展示和线上运营提供稳定的 3D 视觉资产。"]
+                ],
+                works: [
+                    ["case05_render_01.jpg", "tall"],
+                    ["case05_render_02.jpg", "tall"],
+                    ["case05_render_03.jpg", "tall"],
+                    ["case05_render_04.jpg", "tall"],
+                    ["case05_render_05.jpg", "wide"],
+                    ["case05_render_08.jpg", "wide"],
+                    ["case05_render_10.jpg", "tall"],
+                    ["case05_render_12.jpg", "tall"],
+                    ["case05_daily_01.jpg", ""],
+                    ["case05_daily_02.jpg", ""]
+                ],
+                motion: [
+                    ["motion_electronic_product_16x9_01.gif", "Product Motion Preview", "把静态电子烟渲染图延展为短片段，展示产品细节、旋转和动态演示的提案潜力。"],
+                    ["motion_electronic_product_16x9_02.gif", "AI Product Advertisement", "通过短 GIF 呈现产品广告化氛围，用于海外提案和线上运营的动态补充。"]
+                ]
+            }
+        ];
+
+        const gridItems = [
+            ["practice_01.jpg", "", "Perfume Render 01"],
+            ["practice_02.jpg", "", "Perfume Render 02"],
+            ["practice_03.jpg", "wide", "Perfume Still Life"],
+            ["practice_04.jpg", "wide", "Perfume Scene"],
+            ["practice_05.jpg", "", "Skincare Render 01"],
+            ["practice_06.jpg", "", "Skincare Render 02"],
+            ["practice_07.jpg", "", "Skincare Render 03"],
+            ["practice_08.jpg", "", "Skincare Render 04"],
+            ["practice_09.jpg", "", "Pet Packaging 01"],
+            ["practice_10.jpg", "", "Pet Packaging 02"],
+            ["practice_11.jpg", "", "Pet Packaging 03"],
+            ["practice_12.jpg", "tall", "Daily Poster 01"],
+            ["practice_13.jpg", "tall", "Daily Poster 02"],
+            ["practice_14.jpg", "tall", "Daily Poster 03"],
+            ["practice_15.jpg", "tall", "Daily Poster 04"],
+            ["practice_16.jpg", "tall", "Daily Poster 05"]
+        ];
+
+        const img = (name, alt = "") => `<img src="${A + name}" alt="${alt}" loading="lazy">`;
+
+        function renderVisualGrid() {
+            const grid = document.getElementById("visual-grid");
+            grid.innerHTML = gridItems.map(([src, size, label], index) => `
+                <button class="visual-cell ${size} hoverable" type="button" data-lightbox="${A + src}">
+                    ${img(src, label)}
+                    <span class="cell-label mono"><span>[ C_${String(index + 1).padStart(2, "0")} ]</span><span>${label}</span></span>
+                </button>
+            `).join("");
+        }
+
+        function renderProjectList() {
+            const list = document.getElementById("project-list");
+            list.innerHTML = cases.map(item => `
+                <a class="project-row hoverable" href="#${item.id}" data-preview="${A + item.preview}">
+                    <span class="num mono">${item.index} / _</span>
+                    <div>
+                        <h3 class="serif">${item.title}</h3>
+                        <p class="mono">${item.en}</p>
+                    </div>
+                    <div class="role">${item.summary}</div>
+                    <span class="arrow-link" aria-hidden="true">↗</span>
+                </a>
+            `).join("");
+        }
+
+        function renderCases() {
+            const container = document.getElementById("case-container");
+            container.innerHTML = cases.map(item => `
+                <section id="${item.id}" class="case-section">
+                    <div class="case-hero">
+                        ${img(item.hero, item.title)}
+                        <div class="case-hero-content">
+                            <div>
+                                <div class="case-kicker mono">[ ${item.index} // ${item.label} ]</div>
+                                <h2 class="case-title display">${item.title}</h2>
+                            </div>
+                            <div>
+                                <a class="case-home-link hoverable mono" href="#top" aria-label="返回首页">返回首页 / BACK HOME</a>
+                                <p class="case-subtitle">${item.summary}</p>
+                                <div class="case-meta" style="margin-top: 28px;">
+                                    ${item.meta.map(([k, v]) => `
+                                        <div class="meta-item">
+                                            <span class="mono">${k}</span>
+                                            <strong>${v}</strong>
+                                        </div>
+                                    `).join("")}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-body">
+                        <div class="case-body-inner">
+                            <div class="vi-strip">
+                                <div class="vi-intro">
+                                    <div>
+                                        <span class="case-eyebrow mono">[ VISUAL IDENTITY FIRST ]</span>
+                                        <h4 class="display">${item.label}<br>VI ENTRY</h4>
+                                    </div>
+                                    <p>${item.viNote}</p>
+                                </div>
+                                <div class="vi-images">
+                                    ${item.vi.map(src => `
+                                        <button class="hoverable" type="button" data-lightbox="${A + src}">
+                                            ${img(src, item.label + " VI")}
+                                        </button>
+                                    `).join("")}
+                                </div>
+                            </div>
+
+                            <div class="case-narrative">
+                                <h4 class="mono">Project Story<br>${item.en}</h4>
+                                <div class="narrative-grid">
+                                    ${item.narrative.map(([title, text]) => `
+                                        <article class="narrative-item">
+                                            <span class="mono">${title}</span>
+                                            <p>${text}</p>
+                                        </article>
+                                    `).join("")}
+                                    <article class="narrative-item">
+                                        <span class="mono">AI Motion Extension</span>
+                                        <p>AI 主要用于创意预演、人物/产品动态延展、场景氛围探索和短视频分镜生成。最终画面仍经过人工筛选、修图、调色和版式判断。</p>
+                                    </article>
+                                </div>
+                            </div>
+
+                            <div class="case-highlight-grid">
+                                <article class="case-highlight-card">
+                                    <span class="mono">我的工作内容</span>
+                                    <strong>${item.highlightWork}</strong>
+                                </article>
+                                <article class="case-highlight-card">
+                                    <span class="mono">项目结果 / 销售表现</span>
+                                    <strong>${item.highlightOutcome}</strong>
+                                </article>
+                            </div>
+
+                            <div class="gallery-heading">
+                                <h4 class="display">Selected Works</h4>
+                                <p>按品牌识别、商业应用和传播场景组织作品，展示从视觉方向到执行落地的完整度。</p>
+                            </div>
+                            <div class="work-gallery">
+                                ${item.works.map(([src, size]) => `
+                                    <button class="${size} hoverable" type="button" data-lightbox="${A + src}">
+                                        ${img(src, item.title)}
+                                    </button>
+                                `).join("")}
+                            </div>
+
+                            ${item.detailSlices ? `
+                                <div class="gallery-heading" style="margin-top: 72px;">
+                                    <h4 class="display">Detail Page Split</h4>
+                                    <p>该组页面围绕套盒功效、成分卖点和使用顺序展开，突出粉金色系、产品质感和电商转化信息层级。</p>
+                                </div>
+                                <div class="detail-slice-board">
+                                    ${item.detailSlices.map(src => `
+                                        <button class="hoverable" type="button" data-lightbox="${A + src}">
+                                            ${img(src, "详情页切片")}
+                                        </button>
+                                    `).join("")}
+                                </div>
+                            ` : ""}
+
+                            ${item.motion.length ? `
+                                <div class="gallery-heading" style="margin-top: 72px;">
+                                    <h4 class="display">AI Motion Extension</h4>
+                                    <p>MP4 已提取为短 GIF，保留动态表现力，同时让网页打开更轻。</p>
+                                </div>
+                                <div class="motion-grid">
+                                    ${item.motion.map(([src, title, text]) => `
+                                        <article class="motion-card ${src.includes("motion_fashion_lookbook_") ? "is-portrait" : ""}">
+                                            <button class="hoverable" type="button" data-lightbox="${A + src}">
+                                                ${img(src, title)}
+                                            </button>
+                                            <div>
+                                                <span class="mono">${title}</span>
+                                                <p>${text}</p>
+                                            </div>
+                                        </article>
+                                    `).join("")}
+                                </div>
+                            ` : ""}
+                        </div>
+                    </div>
+                </section>
+            `).join("");
+        }
+
+        function setupHoverPreview() {
+            const preview = document.getElementById("hover-preview");
+            const previewImg = preview.querySelector("img");
+            const previewX = document.getElementById("preview-x");
+            document.querySelectorAll(".project-row").forEach(row => {
+                row.addEventListener("mouseenter", () => {
+                    previewImg.src = row.dataset.preview;
+                    preview.classList.add("is-active");
+                });
+                row.addEventListener("mouseleave", () => {
+                    preview.classList.remove("is-active");
+                });
+                row.addEventListener("mousemove", event => {
+                    const x = Math.round(event.clientX);
+                    const y = Math.round(event.clientY);
+                    preview.style.left = `${Math.min(window.innerWidth - 210, x + 90)}px`;
+                    preview.style.top = `${Math.max(180, y)}px`;
+                    previewX.textContent = x;
+                });
+            });
+        }
+
+        function setupLightbox() {
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = lightbox.querySelector("img");
+            const close = lightbox.querySelector("button");
+            document.addEventListener("click", event => {
+                const target = event.target.closest("[data-lightbox]");
+                if (!target) return;
+                event.preventDefault();
+                lightboxImg.src = target.dataset.lightbox;
+                lightbox.classList.add("is-open");
+            });
+            close.addEventListener("click", () => {
+                lightbox.classList.remove("is-open");
+                lightboxImg.src = "";
+            });
+            lightbox.addEventListener("click", event => {
+                if (event.target === lightbox) {
+                    lightbox.classList.remove("is-open");
+                    lightboxImg.src = "";
+                }
+            });
+            window.addEventListener("keydown", event => {
+                if (event.key === "Escape") {
+                    lightbox.classList.remove("is-open");
+                    lightboxImg.src = "";
+                }
+            });
+        }
+
+        function setupCursor() {
+            const dot = document.querySelector(".cursor-dot");
+            const ring = document.querySelector(".cursor-ring");
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let dotX = mouseX;
+            let dotY = mouseY;
+            let ringX = mouseX;
+            let ringY = mouseY;
+            let audioCtx = null;
+            let isMuted = true;
+            let droneOsc = null;
+            let droneGain = null;
+
+            function initAudio() {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === "suspended") audioCtx.resume();
+            }
+
+            function playBlip(freq = 880, type = "sine", duration = 0.08, volume = 0.03) {
+                if (isMuted) return;
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            }
+
+            function startDrone() {
+                if (!audioCtx) return;
+                if (!droneOsc) {
+                    droneOsc = audioCtx.createOscillator();
+                    droneGain = audioCtx.createGain();
+                    droneOsc.type = "sine";
+                    droneOsc.frequency.value = 55;
+                    droneGain.gain.value = 0;
+                    droneOsc.connect(droneGain);
+                    droneGain.connect(audioCtx.destination);
+                    droneOsc.start();
+                }
+                droneGain.gain.linearRampToValueAtTime(isMuted ? 0 : 0.018, audioCtx.currentTime + 0.45);
+            }
+
+            window.addEventListener("mousemove", event => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            function animateCursor() {
+                dotX += (mouseX - dotX) * 0.25;
+                dotY += (mouseY - dotY) * 0.25;
+                ringX += (mouseX - ringX) * 0.12;
+                ringY += (mouseY - ringY) * 0.12;
+                if (dot) {
+                    dot.style.left = `${dotX}px`;
+                    dot.style.top = `${dotY}px`;
+                }
+                if (ring) {
+                    ring.style.left = `${ringX}px`;
+                    ring.style.top = `${ringY}px`;
+                }
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            document.addEventListener("mouseover", event => {
+                if (!event.target.closest("button, a, .hoverable, .btn-mode, h1")) return;
+                document.body.classList.add("is-hovering");
+                if (ring) {
+                    ring.style.width = "70px";
+                    ring.style.height = "70px";
+                    ring.style.borderWidth = "2px";
+                }
+                playBlip(1600, "sine", 0.04, 0.02);
+            });
+
+            document.addEventListener("mouseout", event => {
+                if (!event.target.closest("button, a, .hoverable, .btn-mode, h1")) return;
+                document.body.classList.remove("is-hovering");
+                if (ring) {
+                    ring.style.width = "40px";
+                    ring.style.height = "40px";
+                    ring.style.borderWidth = "1px";
+                }
+            });
+
+            document.addEventListener("click", event => {
+                if (event.target.closest("button, a, .hoverable, .btn-mode, h1")) playBlip(600, "triangle", 0.1, 0.04);
+            });
+
+            document.querySelectorAll(".hover-scramble").forEach(element => {
+                const originalText = element.textContent;
+                const chars = "✕◇◆□■△▲▽▼○●◌◍◐◑◒◓";
+                let interval = null;
+                element.addEventListener("mouseenter", () => {
+                    let iteration = 0;
+                    clearInterval(interval);
+                    interval = setInterval(() => {
+                        element.textContent = originalText.split("").map((char, index) => {
+                            if (index < iteration) return originalText[index];
+                            return chars[Math.floor(Math.random() * chars.length)];
+                        }).join("");
+                        if (iteration >= originalText.length) clearInterval(interval);
+                        iteration += 1 / 3;
+                    }, 30);
+                });
+                element.addEventListener("mouseleave", () => {
+                    clearInterval(interval);
+                    element.textContent = originalText;
+                });
+            });
+
+            const audioButton = document.getElementById("btn-audio");
+            const audioIcon = document.getElementById("audio-status-icon");
+            const audioText = document.getElementById("audio-status-text");
+            audioButton?.addEventListener("click", () => {
+                initAudio();
+                isMuted = !isMuted;
+                audioIcon?.classList.toggle("is-on", !isMuted);
+                if (audioText) audioText.textContent = isMuted ? "AUDIO OFF" : "AUDIO ON";
+                startDrone();
+                playBlip(1200, "sine", 0.15, 0.05);
+            });
+
+            document.getElementById("btn-theme")?.addEventListener("click", () => {
+                document.body.classList.toggle("light-theme");
+                playBlip(980, "sine", 0.18, 0.04);
+            });
+
+            const loader = document.getElementById("loader");
+            const loaderBar = document.getElementById("loader-bar");
+            const loaderPercent = document.getElementById("loader-percent");
+            let progress = 0;
+            const loaderTimer = setInterval(() => {
+                progress += Math.floor(Math.random() * 12) + 6;
+                progress = Math.min(progress, 100);
+                if (loaderBar) loaderBar.style.width = `${progress}%`;
+                if (loaderPercent) loaderPercent.textContent = `${String(progress).padStart(2, "0")}%`;
+                if (progress >= 100) {
+                    clearInterval(loaderTimer);
+                    setTimeout(() => loader?.classList.add("is-hidden"), 260);
+                }
+            }, 70);
+        }
+
+        function setupParticles() {
+            const canvas = document.getElementById("webgl-canvas");
+            if (!canvas || !window.THREE) return;
+
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2("#050505", 0.015);
+
+            const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 25;
+
+            const particleCount = window.innerWidth < 768 ? 15000 : 40000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const originalPositions = new Float32Array(particleCount * 3);
+            const randomSpeeds = new Float32Array(particleCount);
+
+            for (let i = 0; i < particleCount; i += 1) {
+                const u = Math.random() * Math.PI * 2;
+                const v = (Math.random() - 0.5) * 2;
+                const r = 8 + 3 * Math.cos(u * 2);
+                const x = r * Math.cos(u) + Math.sin(v) * 2;
+                const y = r * Math.sin(u) + Math.cos(v) * 2;
+                const z = v * 15;
+                const i3 = i * 3;
+                positions[i3] = x;
+                positions[i3 + 1] = y;
+                positions[i3 + 2] = z;
+                originalPositions[i3] = x;
+                originalPositions[i3 + 1] = y;
+                originalPositions[i3 + 2] = z;
+                randomSpeeds[i] = 0.5 + Math.random() * 1.5;
+            }
+
+            geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.05,
+                transparent: true,
+                opacity: 0.9,
+                sizeAttenuation: true,
+                depthWrite: false,
+                blending: THREE.NormalBlending
+            });
+
+            material.onBeforeCompile = shader => {
+                shader.fragmentShader = shader.fragmentShader.replace(
+                    "vec4 diffuseColor = vec4( diffuse, opacity );",
+                    `vec2 center = gl_PointCoord - vec2(0.5);
+                    float dist = length(center);
+                    if (dist > 0.5) discard;
+                    float alpha = smoothstep(0.5, 0.1, dist);
+                    vec4 diffuseColor = vec4(diffuse, opacity * alpha);`
+                );
+            };
+
+            const particleSystem = new THREE.Points(geometry, material);
+            scene.add(particleSystem);
+
+            const textElementsContainer = document.createElement("div");
+            textElementsContainer.className = "depth-word-layer";
+            textElementsContainer.setAttribute("aria-hidden", "true");
+            document.body.appendChild(textElementsContainer);
+
+            const wordsData = [
+                { id: "depth-word-1", z: 15, x: -6, y: 3 },
+                { id: "depth-word-2", z: 5, x: 8, y: -4 },
+                { id: "depth-word-3", z: -10, x: -7, y: -5 },
+                { id: "depth-word-4", z: -25, x: 5, y: 6 }
+            ];
+
+            const activeWords = wordsData.map(data => {
+                const rawSpan = document.getElementById(data.id);
+                const dom = document.createElement("div");
+                dom.className = "depth-projected-word";
+                dom.textContent = rawSpan?.textContent || "";
+                dom.style.fontSize = "clamp(4rem, 10vw, 10rem)";
+                dom.style.opacity = "0";
+                textElementsContainer.appendChild(dom);
+                return { dom, ...data };
+            });
+
+            let forceMultiplier = 1;
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let currentDepthZ = 25;
+            let targetDepthZ = 25;
+            let lastFrameTime = performance.now();
+            let fpsCounter = 0;
+            let fpsTimer = 0;
+
+            const hudParticles = document.getElementById("hud-particles");
+            if (hudParticles) hudParticles.textContent = particleCount.toLocaleString();
+
+            window.addEventListener("mousemove", event => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            window.addEventListener("resize", () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            const posAttribute = geometry.getAttribute("position");
+
+            function animate(timestamp) {
+                requestAnimationFrame(animate);
+                fpsCounter += 1;
+                if (timestamp - fpsTimer >= 1000) {
+                    const hudFps = document.getElementById("hud-fps");
+                    if (hudFps) hudFps.textContent = fpsCounter;
+                    fpsCounter = 0;
+                    fpsTimer = timestamp;
+                }
+
+                const delta = Math.min(0.05, (timestamp - lastFrameTime) / 1000 || 0.016);
+                lastFrameTime = timestamp;
+                const time = timestamp * 0.001;
+                material.color.set(getComputedStyle(document.documentElement).getPropertyValue("--stark").trim() || "#f7f7f2");
+                scene.fog.color.set(getComputedStyle(document.documentElement).getPropertyValue("--void").trim() || "#050505");
+
+                const pointerX = (mouseX / Math.max(window.innerWidth, 1) - 0.5) * 2;
+                const pointerY = (mouseY / Math.max(window.innerHeight, 1) - 0.5) * 2;
+                const depthProgress = Math.min(1, Math.max(0, (pointerX + 1) * 0.5));
+                targetDepthZ = 26 - depthProgress * 54 + pointerY * 7;
+                currentDepthZ += (targetDepthZ - currentDepthZ) * 0.08;
+                camera.position.z = currentDepthZ;
+                const hudDepth = document.getElementById("hud-depth");
+                if (hudDepth) hudDepth.textContent = camera.position.z.toFixed(2);
+
+                camera.position.x = pointerX * 3.2;
+                camera.position.y = -pointerY * 2.1;
+                camera.lookAt(pointerX * 1.2, -pointerY * 0.8, camera.position.z - 24);
+
+                const positionsArray = posAttribute.array;
+                for (let i = 0; i < particleCount; i += 1) {
+                    const xIndex = i * 3;
+                    const yIndex = i * 3 + 1;
+                    const zIndex = i * 3 + 2;
+                    const oX = originalPositions[xIndex];
+                    const oY = originalPositions[yIndex];
+                    const oZ = originalPositions[zIndex];
+                    const speed = randomSpeeds[i];
+
+                    const waveX = Math.sin(time * speed * 0.25 + oZ * 0.1) * 0.08 * forceMultiplier;
+                    const waveY = Math.cos(time * speed * 0.25 + oX * 0.1) * 0.08 * forceMultiplier;
+                    positionsArray[xIndex] += (oX + waveX - positionsArray[xIndex]) * 0.08;
+                    positionsArray[yIndex] += (oY + waveY - positionsArray[yIndex]) * 0.08;
+                    positionsArray[zIndex] += (oZ - positionsArray[zIndex]) * 0.08;
+                }
+                posAttribute.needsUpdate = true;
+
+                activeWords.forEach(word => {
+                    const vector = new THREE.Vector3(word.x, word.y, word.z);
+                    vector.project(camera);
+                    const depthDiff = Math.abs(camera.position.z - word.z);
+                    if (camera.position.z > word.z && depthDiff < 30) {
+                        const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+                        const y = (-vector.y * 0.5 + 0.5) * window.innerHeight;
+                        const scale = Math.max(0.45, 2 - depthDiff / 15);
+                        word.dom.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${scale})`;
+                        word.dom.style.opacity = Math.max(0, 1 - depthDiff / 30).toString();
+                    } else {
+                        word.dom.style.opacity = "0";
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        renderVisualGrid();
+        renderProjectList();
+        renderCases();
+        setupHoverPreview();
+        setupLightbox();
+        setupCursor();
+        setupParticles();
+    </script>
+</body>
+</html>
+
