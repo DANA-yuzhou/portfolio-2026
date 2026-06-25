@@ -2202,6 +2202,12 @@
             transition: opacity 0.35s ease, background-position 0.35s cubic-bezier(.22,.61,.36,1), visibility 0.35s ease;
         }
 
+        @media (max-width: 768px) {
+            .intro-panorama-fallback {
+                background-image: url("assets/portfolio/fashion-week-pano-mobile.jpg");
+            }
+        }
+
         body.webgl-ready .intro-panorama-fallback { opacity: 0; }
 
         .intro-scene-shade {
@@ -2523,7 +2529,7 @@
                     </p>
                 </div>
                 <button class="homepage-motion-frame hoverable" type="button" data-lightbox="assets/portfolio/homepage_lookbook_16x9.gif">
-                    <img src="assets/portfolio/homepage_lookbook_16x9.gif" alt="AI 结合产品做的模特 look book GIF">
+                    <img src="assets/portfolio/homepage_lookbook_16x9.gif" alt="AI 结合产品做的模特 look book GIF" loading="lazy" decoding="async">
                 </button>
             </div>
         </section>
@@ -3306,7 +3312,7 @@
                 gl.uniform1f(isLoaded, 1);
                 requestAnimationFrame(() => document.body.classList.add("webgl-ready"));
             };
-            image.src = "assets/portfolio/fashion-week-pano.png";
+            image.src = window.innerWidth <= 768 ? "assets/portfolio/fashion-week-pano-mobile.jpg" : "assets/portfolio/fashion-week-pano.png";
 
             const stops = [0.5, -1.57, -3.58];
             const pitches = [0.025, -0.022, 0.018];
