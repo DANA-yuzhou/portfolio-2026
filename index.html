@@ -7,7 +7,7 @@
     <link rel="icon" href="data:,">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Condiment&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
@@ -2131,97 +2131,366 @@
                 transition-duration: 1ms !important;
             }
         }
+
+
+        /* Neon 360 intro imported from 02作品集 */
+        :root {
+            --void: #010828;
+            --panel: rgba(1, 8, 40, 0.78);
+            --panel-2: rgba(4, 12, 43, 0.86);
+            --stark: #eff4ff;
+            --soft: rgba(239, 244, 255, 0.72);
+            --muted: rgba(239, 244, 255, 0.48);
+            --line: rgba(111, 255, 0, 0.2);
+            --line-soft: rgba(239, 244, 255, 0.08);
+            --accent: #6fff00;
+            --rose: #b724ff;
+            --green: #6fff00;
+        }
+
+        body { background: #010828; }
+        ::selection { background: var(--accent); color: #010828; }
+        .display { font-family: Anton, Syne, Impact, "Arial Black", "Microsoft YaHei", sans-serif; font-weight: 400; letter-spacing: 0; }
+
+        .intro-stage {
+            position: relative;
+            z-index: 6;
+            height: 300vh;
+            min-height: 2160px;
+            background: #010828;
+            color: #eff4ff;
+            overflow: clip;
+            --intro-opacity-0: 1;
+            --intro-opacity-1: 0;
+            --intro-opacity-2: 0;
+            --intro-shift-0: 0px;
+            --intro-shift-1: 26px;
+            --intro-shift-2: 26px;
+        }
+
+        .intro-panorama,
+        .intro-panorama-fallback,
+        .intro-scene-shade,
+        .intro-texture-overlay,
+        .intro-header,
+        .intro-social-stack {
+            position: fixed;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .intro-panorama {
+            inset: 0;
+            z-index: 0;
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+            touch-action: none;
+        }
+
+        .intro-panorama:active { cursor: grabbing; }
+
+        .intro-panorama-fallback {
+            --pano-x: 25%;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-color: #010828;
+            background-image: url("assets/portfolio/fashion-week-pano.png");
+            background-repeat: no-repeat;
+            background-position: var(--pano-x) center;
+            background-size: auto 100%;
+            transition: opacity 0.35s ease, background-position 0.35s cubic-bezier(.22,.61,.36,1), visibility 0.35s ease;
+        }
+
+        body.webgl-ready .intro-panorama-fallback { opacity: 0; }
+
+        .intro-scene-shade {
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(1, 8, 40, .72), rgba(1, 8, 40, .08) 48%, rgba(1, 8, 40, .56)),
+                linear-gradient(0deg, rgba(1, 8, 40, .52), transparent 46%, rgba(1, 8, 40, .24));
+        }
+
+        .intro-texture-overlay {
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+            opacity: .32;
+            mix-blend-mode: screen;
+            background-image:
+                radial-gradient(rgba(255,255,255,.15) .55px, transparent .7px),
+                repeating-linear-gradient(112deg, transparent 0 3px, rgba(255,255,255,.025) 3px 4px);
+            background-size: 4px 4px, 8px 8px;
+        }
+
+        body.intro-past .intro-panorama,
+        body.intro-past .intro-panorama-fallback,
+        body.intro-past .intro-scene-shade,
+        body.intro-past .intro-texture-overlay,
+        body.intro-past .intro-header,
+        body.intro-past .intro-social-stack {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-max { width: min(100% - 48px, 1831px); margin: 0 auto; }
+        .intro-liquid {
+            background: rgba(255, 255, 255, .012);
+            background-blend-mode: luminosity;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: none;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,.1), 0 12px 40px rgba(0,0,0,.12);
+            position: relative;
+            overflow: hidden;
+        }
+        .intro-liquid::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.4px;
+            background: linear-gradient(180deg, rgba(255,255,255,.48), rgba(255,255,255,.16) 20%, transparent 40%, transparent 60%, rgba(255,255,255,.16) 80%, rgba(255,255,255,.48));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .intro-header {
+            z-index: 120;
+            top: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+        .intro-brand,
+        .intro-main-nav,
+        .intro-main-nav a { pointer-events: auto; }
+        .intro-brand {
+            border: 0;
+            background: none;
+            padding: 0;
+            font-family: Anton, Impact, sans-serif;
+            font-size: 16px;
+            color: #eff4ff;
+            letter-spacing: .04em;
+        }
+        .intro-main-nav {
+            display: flex;
+            align-items: center;
+            gap: 31px;
+            border-radius: 28px;
+            padding: 17px 35px;
+        }
+        .intro-main-nav a {
+            position: relative;
+            z-index: 1;
+            color: #eff4ff;
+            font-family: Anton, Impact, sans-serif;
+            font-size: 13px;
+            letter-spacing: .04em;
+            transition: color .3s ease;
+        }
+        .intro-main-nav a:hover,
+        .intro-main-nav a.active { color: #6fff00; }
+
+        .intro-social-stack {
+            z-index: 120;
+            top: 124px;
+            right: 28px;
+            display: grid;
+            gap: 10px;
+        }
+        .intro-social-button {
+            display: grid;
+            width: 56px;
+            height: 56px;
+            place-items: center;
+            border-radius: 16px;
+            color: #eff4ff;
+            font-family: "Space Mono", monospace;
+            font-size: 16px;
+        }
+
+        .intro-scroll-stage { position: relative; z-index: 2; min-height: 300vh; }
+        .intro-screen { min-height: 100vh; position: relative; display: flex; align-items: stretch; }
+        .intro-screen-inner {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            transition: opacity .18s linear, transform .3s cubic-bezier(.22,.61,.36,1);
+        }
+        .intro-screen:nth-child(1) .intro-screen-inner { opacity: var(--intro-opacity-0); transform: translateY(var(--intro-shift-0)); }
+        .intro-screen:nth-child(2) .intro-screen-inner { opacity: var(--intro-opacity-1); transform: translateY(var(--intro-shift-1)); }
+        .intro-screen:nth-child(3) .intro-screen-inner { opacity: var(--intro-opacity-2); transform: translateY(var(--intro-shift-2)); }
+
+        .intro-eyebrow { margin: 0 0 15px; color: rgba(239,244,255,.78); font-size: 10px; letter-spacing: .13em; line-height: 1.4; }
+        .intro-stage h1, .intro-stage h2, .intro-stage h3, .intro-stage p { margin-top: 0; }
+        .intro-stage h1, .intro-stage h2, .intro-stage h3 { font-family: Anton, Impact, sans-serif; font-weight: 400; text-transform: uppercase; }
+
+        .intro-hero-content { flex-direction: column; justify-content: center; padding: 136px 0 58px clamp(10px, 7vw, 128px); }
+        .intro-hero-title-wrap { position: relative; width: min(790px, 100%); }
+        .intro-hero-title-wrap h1 { max-width: 760px; margin: 0; font-size: clamp(44px, 6.2vw, 92px); line-height: .98; letter-spacing: -.015em; text-shadow: 0 14px 44px rgba(0,0,0,.26); }
+        .intro-hero-title-wrap h1 span { font-size: .72em; }
+        .intro-handwrite { color: #6fff00; font-family: Condiment, cursive; font-style: normal; font-weight: 400; mix-blend-mode: exclusion; }
+        .intro-hero-title-wrap .intro-handwrite { position: absolute; right: 4%; top: 43%; font-size: clamp(35px, 4vw, 58px); line-height: .7; rotate: -5deg; }
+        .intro-hero-bottom { display: flex; align-items: end; gap: 16px; margin-top: 38px; color: rgba(239,244,255,.72); font-size: 10px; line-height: 1.55; letter-spacing: .1em; text-transform: uppercase; }
+
+        .intro-about-content { align-items: center; justify-content: space-between; gap: clamp(32px, 8vw, 150px); padding: 132px clamp(0px, 5vw, 95px) 72px; }
+        .intro-about-title-wrap { position: relative; align-self: flex-start; margin-top: min(20vh, 210px); }
+        .intro-about-title-wrap h2, .intro-directory-heading h2 { margin: 0; font-size: clamp(45px, 5vw, 74px); line-height: .93; letter-spacing: -.01em; }
+        .intro-about-title-wrap .intro-handwrite { position: absolute; right: -18px; bottom: -11px; font-size: clamp(42px, 4.5vw, 70px); rotate: -8deg; }
+        .intro-about-copy { width: min(360px, 100%); border-radius: 25px; padding: 26px; align-self: flex-start; margin-top: min(22vh, 218px); font-size: 12px; line-height: 1.74; text-transform: uppercase; }
+        .intro-about-copy p + p { margin: 20px 0 0; color: rgba(239,244,255,.62); }
+        .intro-experience-grid { position: absolute; bottom: 72px; right: clamp(0px, 5vw, 95px); left: clamp(0px, 5vw, 95px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .intro-experience-grid article { border-top: 1px solid rgba(239,244,255,.36); padding-top: 11px; }
+        .intro-experience-grid span, .intro-experience-grid p { color: rgba(239,244,255,.64); font-size: 9px; letter-spacing: .09em; line-height: 1.4; }
+        .intro-experience-grid h3 { margin: 9px 0 5px; font-size: 18px; letter-spacing: .02em; }
+        .intro-experience-grid p { margin-bottom: 0; }
+
+        .intro-directory-content { flex-direction: column; justify-content: center; padding: 124px clamp(0px, 5vw, 95px) 48px; }
+        .intro-directory-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: clamp(23px, 5vh, 54px); }
+        .intro-directory-heading h2 span { margin-left: clamp(40px, 7vw, 130px); color: #6fff00; font-family: Condiment, cursive; text-transform: none; font-size: 1.1em; font-weight: 400; }
+        .intro-directory-arrow { position: relative; border: 0; border-bottom: 7px solid #6fff00; background: transparent; color: #eff4ff; font-family: Anton, Impact, sans-serif; font-size: clamp(40px, 5vw, 70px); line-height: .8; }
+        .intro-project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .intro-project-card { min-height: 164px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 25px; padding: 19px; transition: background .28s ease, transform .28s ease; }
+        .intro-project-card:hover { background: rgba(255,255,255,.1); transform: translateY(-4px); }
+        .intro-project-card:nth-child(4), .intro-project-card:nth-child(5) { min-height: 136px; }
+        .intro-project-number { color: #6fff00; font-family: Anton, Impact, sans-serif; font-size: 15px; }
+        .intro-project-brand { margin: 12px 0 6px; color: rgba(239,244,255,.65); font-size: 9px; letter-spacing: .12em; }
+        .intro-project-card h3 { max-width: 260px; margin: 0; font-size: clamp(19px, 1.7vw, 27px); line-height: 1.02; }
+        .intro-project-tag { margin: 12px 0 0; color: rgba(239,244,255,.52); font-size: 8px; letter-spacing: .06em; }
+        .intro-project-arrow { position: absolute; right: 18px; bottom: 15px; display: grid; width: 37px; height: 37px; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #b724ff, #7c3aed); box-shadow: 0 8px 20px rgba(167, 68, 255, .45); font-size: 19px; }
+
+        .homepage-motion, .section, .case-body, .contact-section { background: #010828; }
+        .section-eyebrow, .case-kicker, .project-number, .cell-label span:first-child, .contact-title span, .tag { color: var(--accent) !important; }
+        .section-title, .case-title, .homepage-motion-head h2, .contact-title { letter-spacing: .015em; }
+        .project-row:hover, .visual-cell:hover, .motion-card:hover, .case-home-link:hover, .contact-home-link:hover { border-color: rgba(111, 255, 0, .42) !important; }
+        .project-row:hover h3, .project-row:hover .arrow-link, .case-home-link:hover, .contact-home-link:hover { color: var(--accent) !important; }
+
+        @media (max-width: 900px) {
+            .intro-max { width: min(100% - 32px, 1831px); }
+            .intro-header { top: 18px; }
+            .intro-main-nav { gap: 18px; padding: 14px 20px; }
+            .intro-main-nav a { font-size: 11px; }
+            .intro-social-stack { display: none; }
+            .intro-hero-content { padding-left: 0; }
+            .intro-about-content { gap: 22px; padding-top: 130px; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+            .intro-about-title-wrap, .intro-about-copy { align-self: auto; margin-top: 0; }
+            .intro-about-copy { width: min(400px, 100%); padding: 20px; }
+            .intro-experience-grid { position: static; width: 100%; margin-top: auto; grid-template-columns: 1fr; gap: 9px; padding-bottom: 15px; }
+            .intro-experience-grid article { display: grid; grid-template-columns: 136px 1fr; column-gap: 14px; padding-top: 8px; }
+            .intro-experience-grid h3 { margin: 0; font-size: 15px; }
+            .intro-experience-grid p { grid-column: 2; margin-top: 3px; }
+            .intro-project-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .intro-max { width: min(100% - 28px, 1831px); }
+            .intro-brand { font-size: 14px; }
+            .intro-main-nav { display: none; }
+            .intro-hero-content { justify-content: center; padding-top: 85px; }
+            .intro-hero-title-wrap h1 { font-size: clamp(39px, 12vw, 58px); line-height: 1.01; }
+            .intro-hero-title-wrap .intro-handwrite { right: 3%; top: 47%; font-size: 37px; }
+            .intro-about-content { padding: 100px 0 28px; }
+            .intro-about-title-wrap h2, .intro-directory-heading h2 { font-size: clamp(42px, 13vw, 63px); }
+            .intro-about-copy { font-size: 10px; }
+            .intro-experience-grid article { grid-template-columns: 1fr; }
+            .intro-experience-grid h3 { margin-top: 5px; }
+            .intro-experience-grid p { grid-column: 1; }
+            .intro-directory-content { padding: 90px 0 25px; }
+            .intro-directory-heading { align-items: start; }
+            .intro-directory-arrow { font-size: 42px; border-bottom-width: 5px; }
+            .intro-project-grid { grid-template-columns: 1fr; gap: 10px; }
+            .intro-project-card { min-height: 100px !important; padding: 14px; }
+            .intro-project-brand { margin: 5px 0 3px; }
+            .intro-project-card h3 { font-size: 20px; }
+            .intro-project-tag { margin-top: 6px; }
+            .intro-project-arrow { right: 13px; bottom: 13px; width: 34px; height: 34px; }
+        }
     </style>
 </head>
 <body>
-    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
-    <div class="grid-overlay" aria-hidden="true"></div>
-    <div class="grain" aria-hidden="true"></div>
     <div class="cursor-dot" aria-hidden="true"></div>
     <div class="cursor-ring" aria-hidden="true"></div>
 
     <main id="top" class="site-shell">
-        <section class="mono-cover" aria-label="代鳳嬌视觉作品集封面">
-            <div class="mono-scroll-detector" id="scroll-detector" aria-hidden="true"><div></div></div>
+        <section id="intro-stage" class="intro-stage" aria-label="代凤娇 360 度作品集首页">
+            <canvas id="panorama" class="intro-panorama" aria-label="360 degree fashion week backstage panorama"></canvas>
+            <div id="panoramaFallback" class="intro-panorama-fallback" aria-hidden="true"></div>
+            <div class="intro-scene-shade" aria-hidden="true"></div>
+            <div class="intro-texture-overlay" aria-hidden="true"></div>
 
-            <div id="loader" class="mono-loader" aria-hidden="true">
-                <div class="mono-loader-top mono">
-                    <span>SYS_INIT: PORTFOLIO_2026</span>
-                    <span>DESIGNER: DAI FENGJIAO</span>
-                </div>
-                <div class="mono-loader-main">
-                    <h1 class="display">DAI_FENGJIAO</h1>
-                    <p class="serif">Visual Design Portfolio / Brand Campaigns / AI Motion.</p>
-                    <div class="mono-loader-line"><div id="loader-bar"></div></div>
-                </div>
-                <div class="mono-loader-bottom mono">
-                    <div>[01] LOADING SELECTED WORKS<br>[02] BUILDING VISUAL SYSTEM<br>[03] RENDERING MOTION CASES</div>
-                    <span id="loader-percent">00%</span>
-                </div>
+            <header class="intro-header intro-max">
+                <a class="intro-brand hoverable" href="#top" data-intro-screen="0">DAI FENGJIAO</a>
+                <nav class="intro-liquid intro-main-nav" aria-label="Main navigation">
+                    <a class="active hoverable" href="#top" data-intro-screen="0">HOMEPAGE</a>
+                    <a class="hoverable" href="#intro-about" data-intro-screen="1">ABOUT</a>
+                    <a class="hoverable" href="#intro-directory" data-intro-screen="2">DIRECTORY</a>
+                </nav>
+            </header>
+
+            <div class="intro-social-stack" aria-label="Contact shortcuts">
+                <a class="intro-liquid intro-social-button hoverable" href="mailto:3129873198@qq.com" aria-label="Email">✉</a>
+                <a class="intro-liquid intro-social-button hoverable" href="#contact" aria-label="Contact">D</a>
+                <a class="intro-liquid intro-social-button hoverable" href="#case-01" aria-label="Works">◎</a>
             </div>
 
-            <div class="mono-cover-ui">
-                <header class="mono-cover-head">
-                    <div class="mono-cover-brand">
-                        <a href="#top" class="display hover-scramble hoverable" data-scramble="DAI">DAI</a>
-                        <div class="mono mono-cover-status">
-                            <span></span>
-                            <b>ONLINE PORTFOLIO: ACTIVE</b>
+            <div class="intro-scroll-stage">
+                <section class="intro-screen intro-hero-screen" aria-label="Homepage">
+                    <div class="intro-max intro-screen-inner intro-hero-content">
+                        <p class="intro-eyebrow mono">FASHION VISUAL DESIGNER / PORTFOLIO 2026</p>
+                        <div class="intro-hero-title-wrap">
+                            <h1>Beyond fashion<br>and <span>( its )</span> familiar<br>boundaries</h1>
+                            <em class="intro-handwrite">Portfolio<br>2026</em>
+                        </div>
+                        <div class="intro-hero-bottom mono">
+                            <p>Scroll to enter<br>the backstage.</p>
+                            <span>↓</span>
                         </div>
                     </div>
-                    <div class="mono-cover-controls mono">
-                        <button id="btn-audio" class="hoverable" type="button" aria-label="音频状态">
-                            <span id="audio-status-icon"></span>
-                            <span id="audio-status-text">AUDIO OFF</span>
-                        </button>
-                        <button id="btn-theme" class="hoverable" type="button" aria-label="切换黑白极性"><span></span></button>
-                    </div>
-                </header>
+                </section>
 
-                <div class="mono-cover-center">
-                    <div class="mono-cover-title-block">
-                        <span class="mono">[ CHAPTER. I ]</span>
-                        <h1 class="display hoverable">VISUAL</h1>
-                        <p class="serif">代鳳嬌 / 视觉设计师，聚焦品牌视觉、服装内容、电商详情与 AI 动态延展。</p>
-                    </div>
-                    <div class="mono-cover-hud">
-                        <div class="mono">
-                            <div>P_COUNT: <span id="hud-particles">0</span></div>
-                            <div>MATRIX_Z: <span id="hud-depth">0.00</span>m</div>
-                            <div>FPS: <span id="hud-fps">60</span></div>
+                <section id="intro-about" class="intro-screen intro-about-screen" aria-label="About Dai Fengjiao">
+                    <div class="intro-max intro-screen-inner intro-about-content">
+                        <div class="intro-about-title-wrap">
+                            <p class="intro-eyebrow mono">ABOUT ME / 02</p>
+                            <h2>Hello!<br>I'm Dana</h2>
+                            <em class="intro-handwrite">Fengjiao</em>
                         </div>
-                        <i></i>
-                        <p class="serif">Scroll downward to enter selected commercial visual systems.</p>
-                        <div class="mono-qr-card mono">
-                            <img src="assets/portfolio/wechat_contact_qr_square.jpg" alt="WeChat QR code">
-                            <span>WECHAT // DANA8888886</span>
+                        <div class="intro-about-copy intro-liquid">
+                            <p>Visual designer focusing on fashion campaigns, e-commerce content, brand identity, retouching, and AI-assisted motion.</p>
+                            <p>我把品牌气质、商业信息和视觉执行整理成更清晰、更有记忆点的图像系统。</p>
+                        </div>
+                        <div class="intro-experience-grid">
+                            <article><span>2023.03 - 2024.09</span><h3>FULUN TECHNOLOGY</h3><p>3D PRODUCT VISUAL / OVERSEAS PROPOSAL</p></article>
+                            <article><span>2024.10 - 2025.05</span><h3>GUYUERIJI</h3><p>FASHION CAMPAIGN / E-COMMERCE CONTENT</p></article>
+                            <article><span>2025.06 - 2025.11</span><h3>MANOIRS GALLERY</h3><p>BRAND IDENTITY / LIFESTYLE VISUAL</p></article>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <footer class="mono-cover-foot">
-                    <nav class="mono-cover-modes mono" aria-label="Case quick links">
-                        <a class="hoverable" href="#case-01">[01] FASHION WEEK</a>
-                        <a class="hoverable" href="#case-02">[02] CONTENT</a>
-                        <a class="hoverable" href="#case-03">[03] MANOIRS</a>
-                        <a class="hoverable" href="#case-04">[04] SKINCARE</a>
-                        <a class="hoverable" href="#case-05">[05] 3D PRODUCT</a>
-                    </nav>
-                    <div class="mono-cover-marquee mono" aria-hidden="true">
-                        <span>INTERACTIVE DIGITAL GEOMETRY SYSTEM // VISUAL PORTFOLIO 2026 // BRAND CAMPAIGN // E-COMMERCE DETAIL // AI MOTION // </span>
+                <section id="intro-directory" class="intro-screen intro-directory-screen" aria-label="Selected works directory">
+                    <div class="intro-max intro-screen-inner intro-directory-content">
+                        <div class="intro-directory-heading">
+                            <div><p class="intro-eyebrow mono">SELECTED WORKS / 03</p><h2>Collection of<br><span>visual</span> objects</h2></div>
+                            <a class="intro-directory-arrow hoverable" href="#archive" aria-label="Selected works">↗</a>
+                        </div>
+                        <div class="intro-project-grid">
+                            <a class="intro-liquid intro-project-card hoverable" href="#case-01"><span class="intro-project-number">01</span><div><p class="intro-project-brand mono">GUYUERIJI</p><h3>深圳时装周全案视觉设计</h3><p class="intro-project-tag mono">BRAND CAMPAIGN / EVENT VISUAL</p></div><span class="intro-project-arrow">↗</span></a>
+                            <a class="intro-liquid intro-project-card hoverable" href="#case-02"><span class="intro-project-number">02</span><div><p class="intro-project-brand mono">GUYUERIJI</p><h3>新中式女装内容视觉系统</h3><p class="intro-project-tag mono">E-COMMERCE / CONTENT SYSTEM</p></div><span class="intro-project-arrow">↗</span></a>
+                            <a class="intro-liquid intro-project-card hoverable" href="#case-03"><span class="intro-project-number">03</span><div><p class="intro-project-brand mono">MANOIRS GALLERY</p><h3>家居品牌从 0 到 1 视觉搭建</h3><p class="intro-project-tag mono">BRAND IDENTITY / SOCIAL CONTENT</p></div><span class="intro-project-arrow">↗</span></a>
+                            <a class="intro-liquid intro-project-card hoverable" href="#case-04"><span class="intro-project-number">04</span><div><p class="intro-project-brand mono">BSLR / BAOKOUCHI</p><h3>私域护肤品牌质感视觉升级</h3><p class="intro-project-tag mono">PRODUCT VISUAL / E-COMMERCE</p></div><span class="intro-project-arrow">↗</span></a>
+                            <a class="intro-liquid intro-project-card hoverable" href="#case-05"><span class="intro-project-number">05</span><div><p class="intro-project-brand mono">FULUN TECHNOLOGY</p><h3>电子烟产品 3D 渲染与海外提案视觉</h3><p class="intro-project-tag mono">3D RENDER / GLOBAL PROPOSAL</p></div><span class="intro-project-arrow">↗</span></a>
+                        </div>
                     </div>
-                    <div class="mono-cover-force mono">
-                        <span>CASE NAV:</span>
-                        <b>MOUSE DEPTH</b>
-                    </div>
-                </footer>
-            </div>
-
-            <div class="mono-depth-source" aria-hidden="true">
-                <span id="depth-word-1">FENGJIAO</span>
-                <span id="depth-word-2">SYSTEM</span>
-                <span id="depth-word-3">PORTFOLIO</span>
-                <span id="depth-word-4">VISUAL</span>
+                </section>
             </div>
         </section>
 
@@ -2948,6 +3217,174 @@
             }, 70);
         }
 
+
+
+        function setupPanoramaIntro() {
+            const canvas = document.getElementById("panorama");
+            const fallback = document.getElementById("panoramaFallback");
+            const stage = document.getElementById("intro-stage");
+            if (!canvas || !fallback || !stage) return;
+
+            const gl = canvas.getContext("webgl", { antialias: true, alpha: false });
+            if (!gl) return;
+            const vertexSource = `attribute vec2 position; void main(){gl_Position=vec4(position,0.,1.);}`;
+            const fragmentSource = `
+                precision highp float;
+                uniform sampler2D panorama;
+                uniform vec2 resolution;
+                uniform float yaw;
+                uniform float pitch;
+                uniform float fov;
+                uniform float loaded;
+                const float PI = 3.14159265359;
+                void main(){
+                    vec2 uv = gl_FragCoord.xy / resolution;
+                    vec2 screen = uv * 2.0 - 1.0;
+                    screen.x *= resolution.x / resolution.y;
+                    vec3 ray = normalize(vec3(screen.x * fov, screen.y * fov, -1.0));
+                    float cp = cos(pitch); float sp = sin(pitch);
+                    ray.yz = mat2(cp, -sp, sp, cp) * ray.yz;
+                    float c = cos(yaw); float s = sin(yaw);
+                    ray.xz = mat2(c, -s, s, c) * ray.xz;
+                    vec2 panoUv = vec2(fract(atan(ray.z, ray.x) / (2.0 * PI) + .5), asin(ray.y) / PI + .5);
+                    vec3 color = texture2D(panorama, panoUv).rgb;
+                    gl_FragColor = vec4(mix(vec3(.004, .031, .157), color, loaded), 1.0);
+                }`;
+            const compile = (type, source) => {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                return shader;
+            };
+            const program = gl.createProgram();
+            gl.attachShader(program, compile(gl.VERTEX_SHADER, vertexSource));
+            gl.attachShader(program, compile(gl.FRAGMENT_SHADER, fragmentSource));
+            gl.linkProgram(program);
+            gl.useProgram(program);
+            const buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+            const position = gl.getAttribLocation(program, "position");
+            gl.enableVertexAttribArray(position);
+            gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+            const texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([1,8,40,255]));
+            gl.uniform1i(gl.getUniformLocation(program, "panorama"), 0);
+            const isLoaded = gl.getUniformLocation(program, "loaded");
+            const yawUniform = gl.getUniformLocation(program, "yaw");
+            const pitchUniform = gl.getUniformLocation(program, "pitch");
+            const fovUniform = gl.getUniformLocation(program, "fov");
+            const resolution = gl.getUniformLocation(program, "resolution");
+            gl.uniform1f(isLoaded, 0);
+            const image = new Image();
+            image.onload = () => {
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+                gl.uniform1f(isLoaded, 1);
+                requestAnimationFrame(() => document.body.classList.add("webgl-ready"));
+            };
+            image.src = "assets/portfolio/fashion-week-pano.png";
+
+            const stops = [0.5, -1.57, -3.58];
+            const pitches = [0.025, -0.022, 0.018];
+            const fovs = [0.63, 0.67, 0.61];
+            let progress = 0, offset = 0, pitchOffset = 0, fallbackOffset = 0;
+            let displayed = stops[0], displayedPitch = pitches[0], displayedFov = fovs[0];
+            let dragging = false, lastX = 0, lastY = 0, settleTimer = null;
+            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+            const lerp = (from, to, amount) => from + (to - from) * amount;
+            const ease = value => value < .5 ? 16 * value ** 5 : 1 - ((-2 * value + 2) ** 5) / 2;
+            const cameraFrame = () => {
+                const step = clamp(progress, 0, 1) * 2;
+                const index = Math.floor(step);
+                const next = Math.min(index + 1, 2);
+                const between = ease(step - index);
+                return {
+                    yaw: lerp(stops[index], stops[next], between) + offset,
+                    pitch: lerp(pitches[index], pitches[next], between) + pitchOffset,
+                    fov: lerp(fovs[index], fovs[next], between),
+                };
+            };
+            const updateFallback = () => fallback.style.setProperty("--pano-x", `${25 + progress * 55 + fallbackOffset}%`);
+            const resize = () => {
+                const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
+                canvas.width = window.innerWidth * ratio;
+                canvas.height = window.innerHeight * ratio;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            };
+            const updateScroll = () => {
+                const limit = Math.max(stage.offsetHeight - window.innerHeight, 1);
+                progress = clamp((window.scrollY - stage.offsetTop) / limit, 0, 1);
+                updateFallback();
+                const active = Math.min(2, Math.round(progress * 2));
+                document.querySelectorAll("[data-intro-screen]").forEach(button => button.classList.toggle("active", Number(button.dataset.introScreen) === active));
+                document.querySelectorAll(".intro-screen").forEach((screen, index) => {
+                    const distance = Math.abs(progress * 2 - index);
+                    const visibility = clamp(1 - distance * .9, 0, 1);
+                    stage.style.setProperty(`--intro-opacity-${index}`, `${visibility}`);
+                    stage.style.setProperty(`--intro-shift-${index}`, `${(1 - visibility) * 26}px`);
+                });
+                document.body.classList.toggle("intro-past", window.scrollY > stage.offsetTop + limit + 20);
+            };
+            canvas.addEventListener("pointerdown", event => {
+                dragging = true; lastX = event.clientX; lastY = event.clientY; canvas.setPointerCapture(event.pointerId);
+                if (settleTimer) clearTimeout(settleTimer);
+            });
+            canvas.addEventListener("pointermove", event => {
+                if (!dragging) return;
+                const deltaX = event.clientX - lastX;
+                const deltaY = event.clientY - lastY;
+                offset += deltaX * .004;
+                pitchOffset = clamp(pitchOffset + deltaY * .0028, -.34, .34);
+                fallbackOffset += deltaX * .035;
+                lastX = event.clientX; lastY = event.clientY;
+                updateFallback();
+            });
+            const release = () => {
+                dragging = false;
+                settleTimer = setTimeout(() => { offset = 0; pitchOffset = 0; fallbackOffset = 0; updateFallback(); }, 700);
+            };
+            canvas.addEventListener("pointerup", release);
+            canvas.addEventListener("pointercancel", release);
+            window.addEventListener("resize", () => { resize(); updateScroll(); });
+            window.addEventListener("scroll", updateScroll, { passive: true });
+            document.querySelectorAll("[data-intro-screen]").forEach(button => {
+                button.addEventListener("click", event => {
+                    event.preventDefault();
+                    window.scrollTo({ top: stage.offsetTop + Number(button.dataset.introScreen || 0) * window.innerHeight, behavior: "smooth" });
+                });
+            });
+            document.querySelectorAll(".intro-project-card, .intro-directory-arrow").forEach(link => {
+                link.addEventListener("click", event => {
+                    const href = link.getAttribute("href");
+                    if (!href || !href.startsWith("#")) return;
+                    const target = document.querySelector(href);
+                    if (!target) return;
+                    event.preventDefault();
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                });
+            });
+            resize(); updateScroll();
+            const draw = () => {
+                const target = cameraFrame();
+                displayed = lerp(displayed, target.yaw, dragging ? .18 : .055);
+                displayedPitch = lerp(displayedPitch, target.pitch, dragging ? .18 : .055);
+                displayedFov = lerp(displayedFov, target.fov, .05);
+                gl.uniform2f(resolution, canvas.width, canvas.height);
+                gl.uniform1f(yawUniform, displayed);
+                gl.uniform1f(pitchUniform, displayedPitch);
+                gl.uniform1f(fovUniform, displayedFov);
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(draw);
+            };
+            draw();
+        }
         function setupParticles() {
             const canvas = document.getElementById("webgl-canvas");
             if (!canvas || !window.THREE) return;
@@ -3127,13 +3564,13 @@
             requestAnimationFrame(animate);
         }
 
+        setupPanoramaIntro();
         renderVisualGrid();
         renderProjectList();
         renderCases();
         setupHoverPreview();
         setupLightbox();
         setupCursor();
-        setupParticles();
     </script>
 </body>
 </html>
