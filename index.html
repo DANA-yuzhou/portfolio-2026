@@ -926,6 +926,50 @@
             text-transform: uppercase;
         }
 
+        .intro-home-qr {
+            position: absolute;
+            right: clamp(24px, 7vw, 118px);
+            bottom: clamp(56px, 10vh, 112px);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 14px;
+            border: 1px solid rgba(111, 255, 0, 0.24);
+            background: rgba(1, 8, 40, 0.58);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .intro-home-qr img {
+            width: 132px;
+            aspect-ratio: 1;
+            display: block;
+            object-fit: cover;
+            background: #fff;
+        }
+
+        .intro-home-qr span {
+            display: block;
+            color: var(--accent);
+            font-size: 12px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+        }
+
+        .intro-home-qr p {
+            margin: 10px 0 0;
+            max-width: 170px;
+            color: rgba(239, 244, 255, 0.78);
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        a[href="#case-04"],
+        #case-04 {
+            display: none !important;
+        }
+
         .section {
             position: relative;
             padding: 112px 6vw;
@@ -2388,6 +2432,9 @@
             .intro-main-nav a { font-size: 11px; }
             .intro-social-stack { display: none; }
             .intro-hero-content { padding-left: 0; }
+            .intro-home-qr { right: 18px; bottom: 26px; gap: 12px; padding: 10px; }
+            .intro-home-qr img { width: 104px; }
+            .intro-home-qr p { display: none; }
             .intro-about-content { gap: 22px; padding-top: 130px; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
             .intro-about-title-wrap, .intro-about-copy { align-self: auto; margin-top: 0; }
             .intro-about-copy { width: min(400px, 100%); padding: 20px; }
@@ -2404,6 +2451,9 @@
             .intro-hero-content { justify-content: center; padding-top: 85px; }
             .intro-hero-title-wrap h1 { font-size: clamp(39px, 12vw, 58px); line-height: 1.01; }
             .intro-hero-title-wrap .intro-handwrite { right: 3%; top: 47%; font-size: 37px; }
+            .intro-home-qr { right: 14px; bottom: 18px; }
+            .intro-home-qr img { width: 86px; }
+            .intro-home-qr span { font-size: 9px; letter-spacing: .18em; }
             .intro-about-content { padding: 100px 0 28px; }
             .intro-about-title-wrap h2, .intro-directory-heading h2 { font-size: clamp(42px, 13vw, 63px); }
             .intro-about-copy { font-size: 10px; }
@@ -2476,6 +2526,13 @@
                         <div class="intro-hero-bottom mono">
                             <p>Scroll to enter<br>the backstage.</p>
                             <span>↓</span>
+                        </div>
+                        <div class="intro-home-qr">
+                            <img src="assets/portfolio/wechat_contact_qr_square.jpg" alt="WeChat QR code">
+                            <div>
+                                <span class="mono">WECHAT</span>
+                                <p>Scan QR to add WeChat / dana8888886.</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -2869,6 +2926,8 @@
             }
         ];
 
+        const visibleCases = cases.filter(item => item.id !== "case-04");
+
         const gridItems = [
             ["practice_01.jpg", "", "Perfume Render 01"],
             ["practice_02.jpg", "", "Perfume Render 02"],
@@ -2902,7 +2961,7 @@
 
         function renderProjectList() {
             const list = document.getElementById("project-list");
-            list.innerHTML = cases.map(item => `
+            list.innerHTML = visibleCases.map(item => `
                 <a class="project-row hoverable" href="#${item.id}" data-preview="${A + item.preview}">
                     <span class="num mono">${item.index} / _</span>
                     <div>
@@ -2917,7 +2976,7 @@
 
         function renderCases() {
             const container = document.getElementById("case-container");
-            container.innerHTML = cases.map(item => `
+            container.innerHTML = visibleCases.map(item => `
                 <section id="${item.id}" class="case-section">
                     <div class="case-hero">
                         ${img(item.hero, item.title)}
