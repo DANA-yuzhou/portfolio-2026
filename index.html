@@ -1520,32 +1520,6 @@
             margin-top: 26px;
         }
 
-        .case-detail-works {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            gap: 12px;
-            margin-top: 26px;
-            margin-bottom: 12px;
-        }
-
-        .case-detail-works button {
-            appearance: none;
-            flex: 0 0 auto;
-            max-width: 100%;
-            padding: 0;
-            border: 0;
-            background: transparent;
-            cursor: none;
-        }
-
-        .case-detail-works img {
-            display: block;
-            width: auto;
-            max-width: min(100%, 667px);
-            height: auto;
-        }
-
         .detail-slice-board {
             margin-top: 32px;
             padding: 28px;
@@ -2039,16 +2013,6 @@
             .vi-images,
             .detail-slice-board {
                 grid-template-columns: 1fr;
-            }
-
-            .case-detail-works {
-                gap: 10px;
-            }
-
-            .case-detail-works button,
-            .case-detail-works img {
-                width: 100%;
-                max-width: 100%;
             }
 
             .detail-slice-board {
@@ -3027,22 +2991,6 @@
                                 <h4 class="display">Selected Works</h4>
                                 <p>按品牌识别、商业应用和传播场景组织作品，展示从视觉方向到执行落地的完整度。</p>
                             </div>
-                            ${item.id === "case-02" ? `
-                                <div class="case-detail-works">
-                                    ${[
-                                        "case02_detail_01.jpg",
-                                        "case02_detail_02.jpg",
-                                        "case02_detail_03.jpg",
-                                        "case02_detail_04.jpg",
-                                        "case02_detail_05.jpg",
-                                        "case02_detail_06.jpg"
-                                    ].map(src => `
-                                        <button class="hoverable" type="button" data-lightbox="${A + src}">
-                                            ${img(src, item.title)}
-                                        </button>
-                                    `).join("")}
-                                </div>
-                            ` : ""}
                             <div class="work-gallery">
                                 ${item.works.map(([src, size]) => `
                                     <button class="${size} hoverable" type="button" data-lightbox="${A + src}">
