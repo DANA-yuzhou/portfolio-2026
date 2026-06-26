@@ -1563,6 +1563,25 @@
             min-height: 520px;
         }
 
+        .work-gallery button.detail {
+            grid-column: span 3;
+            min-height: 0;
+            background: #f5f0ea;
+            border-color: rgba(140, 255, 0, 0.28);
+        }
+
+        .work-gallery button.detail img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .work-gallery button.detail:hover img {
+            transform: none;
+            filter: contrast(1.04);
+        }
+
         .gallery-heading {
             display: flex;
             justify-content: space-between;
@@ -2026,10 +2045,15 @@
             .work-gallery button,
             .work-gallery button.wide,
             .work-gallery button.tall,
+            .work-gallery button.detail,
             .vi-images button,
             .vi-images button:first-child {
                 grid-column: auto;
                 min-height: 280px;
+            }
+
+            .work-gallery button.detail {
+                min-height: 0;
             }
 
             .visual-cell,
@@ -2716,9 +2740,12 @@
                     ["case02_online_01.jpg", "tall"],
                     ["case02_online_02.jpg", "tall"],
                     ["case02_online_06.jpg", "tall"],
-                    ["case02_detail_01.jpg", "tall"],
-                    ["case02_detail_02.jpg", "tall"],
-                    ["case02_detail_03.jpg", "tall"],
+                    ["case02_detail_01.jpg", "detail"],
+                    ["case02_detail_02.jpg", "detail"],
+                    ["case02_detail_03.jpg", "detail"],
+                    ["case02_detail_04.jpg", "detail"],
+                    ["case02_detail_05.jpg", "detail"],
+                    ["case02_detail_06.jpg", "detail"],
                     ["case02_ai_fashion_01.jpg", "tall"],
                     ["case02_ai_fashion_02.jpg", "tall"],
                     ["case02_ai_fashion_03.jpg", "tall"],
