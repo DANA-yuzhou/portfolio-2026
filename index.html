@@ -1648,6 +1648,40 @@
             display: block;
         }
 
+        #case-02 .work-group {
+            margin-top: 34px;
+        }
+
+        #case-02 .work-group:first-child {
+            margin-top: 26px;
+        }
+
+        #case-02 .work-group-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 12px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(105, 255, 0, 0.36);
+        }
+
+        #case-02 .work-group-head h5 {
+            margin: 0;
+            color: var(--stark);
+            font-size: clamp(1.15rem, 2.4vw, 2.3rem);
+            line-height: 0.95;
+            text-transform: uppercase;
+        }
+
+        #case-02 .work-group-head span {
+            color: var(--acid);
+            font-size: 10px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
         .gallery-heading {
             display: flex;
             justify-content: space-between;
@@ -2806,78 +2840,109 @@
                     ["Process", "先围绕服装系列建立画面调性，再根据渠道拆分素材比例和版式。人像图重点处理肤色、服装质感和氛围；静物图重点处理面料、配饰和细节。"],
                     ["Outcome", "通过统一画面网感、排版节奏和内容封面策略，小红书笔记点击呈明显提升趋势，线上内容也更容易形成系列感和品牌识别。"]
                 ],
-                works: [
-                    ["case02_portrait_01.jpg", "wide"],
-                    ["case02_portrait_02.jpg", "wide"],
-                    ["case02_portrait_03.jpg", ""],
-                    ["case02_portrait_04.jpg", ""],
-                    ["case02_portrait_05.jpg", "tall"],
-                    ["case02_portrait_06.jpg", "tall"],
-                    ["case02_still_01.jpg", "tall"],
-                    ["case02_still_02.jpg", "tall"],
-                    ["case02_ai_fashion_01.jpg", "tall"],
-                    ["case02_ai_fashion_02.jpg", "tall"],
-                    ["case02_ai_fashion_03.jpg", "tall"],
-                    ["case02_ai_fashion_04.jpg", "tall"],
-                    ["case02_ai_fashion_05.jpg", "tall"],
-                    ["case02_ai_fashion_06.jpg", "tall"],
-                    ["case02_ai_fashion_07.jpg", "tall"],
-                    ["case02_ai_fashion_08.jpg", "tall"],
-                    ["case02_ai_fashion_09.jpg", "tall"],
-                    ["case02_ai_fashion_10.jpg", "tall"],
-                    ["case02_ai_fashion_11.jpg", "tall"],
-                    ["case02_ai_fashion_13.jpg", "tall"],
-                    ["case02_ai_fashion_14.jpg", "tall"],
-                    ["case02_ai_fashion_15.jpg", "tall"],
-                    ["case02_photo_update_01.jpg", "tall"],
-                    ["case02_photo_update_02.jpg", "tall"],
-                    ["case02_photo_update_03.jpg", "tall"],
-                    ["case02_photo_update_04.jpg", "tall"],
-                    ["case02_photo_update_05.jpg", "tall"],
-                    ["case02_photo_update_06.jpg", "tall"],
-                    ["case02_photo_update_07.jpg", "tall"],
-                    ["case02_photo_update_08.jpg", "tall"],
-                    ["case02_photo_update_09.jpg", "tall"],
-                    ["case02_photo_update_10.jpg", "tall"],
-                    ["case02_photo_update_11.jpg", "tall"],
-                    ["case02_photo_update_12.jpg", "tall"],
-                    ["case02_photo_update_13.jpg", "tall"],
-                    ["case02_photo_update_14.jpg", "tall"],
-                    ["case02_online_banner_update_01.jpg", "tall"],
-                    ["case02_online_banner_update_02.jpg", "tall"],
-                    ["case02_online_banner_update_03.jpg", "tall"],
-                    ["case02_online_banner_update_04.jpg", "tall"],
-                    ["case02_online_banner_update_05.jpg", "tall"],
-                    ["case02_online_banner_update_06.jpg", "tall"],
-                    ["case02_online_banner_update_07.jpg", "tall"],
-                    ["case02_online_banner_update_08.jpg", "tall"],
-                    ["case02_online_banner_update_09.jpg", "tall"],
-                    ["case02_offline_event_update_01.jpg", "tall"],
-                    ["case02_offline_event_update_02.jpg", "tall"],
-                    ["case02_offline_event_update_03.jpg", "tall"],
-                    ["case02_offline_event_update_04.jpg", "tall"],
-                    ["case02_offline_event_update_05.jpg", "tall"],
-                    ["case02_offline_event_update_06.jpg", "tall"],
-                    ["case02_offline_event_update_07.jpg", "tall"],
-                    ["case02_offline_event_update_08.jpg", "tall"],
-                    ["case02_offline_event_update_09.jpg", "wide"],
-                    ["case02_offline_event_update_10.jpg", "wide"],
-                    ["case02_offline_event_update_11.jpg", "wide"],
-                    ["case02_offline_event_update_12.jpg", "wide"],
-                    ["case02_offline_event_update_13.jpg", "tall"],
-                    ["case02_offline_event_update_14.jpg", "wide"],
-                    ["case02_offline_event_update_15.jpg", "wide"],
-                    ["case02_offline_event_update_16.jpg", "tall"],
-                    ["case02_offline_event_update_17.jpg", "tall"],
-                    ["case02_offline_event_update_18.jpg", "wide"],
-                    ["case02_offline_event_update_19.jpg", "wide"],
-                    ["case02_detail_update_01.jpg", "detail-natural"],
-                    ["case02_detail_update_02.jpg", "detail-natural"],
-                    ["case02_detail_update_03.jpg", "detail-natural"],
-                    ["case02_detail_update_04.jpg", "detail-natural"],
-                    ["case02_detail_update_05.jpg", "detail-natural"],
-                    ["case02_detail_update_06.jpg", "detail-natural"]
+                workGroups: [
+                    {
+                        title: "Original Campaign",
+                        note: "LOOKBOOK / PRODUCT / AI EXTENSION",
+                        items: [
+                            ["case02_portrait_01.jpg", "wide"],
+                            ["case02_portrait_02.jpg", "wide"],
+                            ["case02_portrait_03.jpg", ""],
+                            ["case02_portrait_04.jpg", ""],
+                            ["case02_portrait_05.jpg", "tall"],
+                            ["case02_portrait_06.jpg", "tall"],
+                            ["case02_still_01.jpg", "tall"],
+                            ["case02_still_02.jpg", "tall"],
+                            ["case02_ai_fashion_01.jpg", "tall"],
+                            ["case02_ai_fashion_02.jpg", "tall"],
+                            ["case02_ai_fashion_03.jpg", "tall"],
+                            ["case02_ai_fashion_04.jpg", "tall"],
+                            ["case02_ai_fashion_05.jpg", "tall"],
+                            ["case02_ai_fashion_06.jpg", "tall"],
+                            ["case02_ai_fashion_07.jpg", "tall"],
+                            ["case02_ai_fashion_08.jpg", "tall"],
+                            ["case02_ai_fashion_09.jpg", "tall"],
+                            ["case02_ai_fashion_10.jpg", "tall"],
+                            ["case02_ai_fashion_11.jpg", "tall"],
+                            ["case02_ai_fashion_13.jpg", "tall"],
+                            ["case02_ai_fashion_14.jpg", "tall"],
+                            ["case02_ai_fashion_15.jpg", "tall"]
+                        ]
+                    },
+                    {
+                        title: "Photography",
+                        note: "SHOOTING / RETOUCHING",
+                        items: [
+                            ["case02_photo_update_01.jpg", "tall"],
+                            ["case02_photo_update_02.jpg", "tall"],
+                            ["case02_photo_update_03.jpg", "tall"],
+                            ["case02_photo_update_04.jpg", "tall"],
+                            ["case02_photo_update_05.jpg", "tall"],
+                            ["case02_photo_update_06.jpg", "tall"],
+                            ["case02_photo_update_07.jpg", "tall"],
+                            ["case02_photo_update_08.jpg", "tall"],
+                            ["case02_photo_update_09.jpg", "tall"],
+                            ["case02_photo_update_10.jpg", "tall"],
+                            ["case02_photo_update_11.jpg", "tall"],
+                            ["case02_photo_update_12.jpg", "tall"],
+                            ["case02_photo_update_13.jpg", "tall"],
+                            ["case02_photo_update_14.jpg", "tall"]
+                        ]
+                    },
+                    {
+                        title: "Online Banner",
+                        note: "E-COMMERCE / SOCIAL",
+                        items: [
+                            ["case02_online_banner_update_01.jpg", "tall"],
+                            ["case02_online_banner_update_02.jpg", "tall"],
+                            ["case02_online_banner_update_03.jpg", "tall"],
+                            ["case02_online_banner_update_04.jpg", "tall"],
+                            ["case02_online_banner_update_05.jpg", "tall"],
+                            ["case02_online_banner_update_06.jpg", "tall"],
+                            ["case02_online_banner_update_07.jpg", "tall"],
+                            ["case02_online_banner_update_08.jpg", "tall"],
+                            ["case02_online_banner_update_09.jpg", "tall"]
+                        ]
+                    },
+                    {
+                        title: "Offline Event",
+                        note: "RUNWAY / SHOWROOM / SALON",
+                        items: [
+                            ["case02_offline_event_update_01.jpg", "tall"],
+                            ["case02_offline_event_update_02.jpg", "tall"],
+                            ["case02_offline_event_update_03.jpg", "tall"],
+                            ["case02_offline_event_update_04.jpg", "tall"],
+                            ["case02_offline_event_update_05.jpg", "tall"],
+                            ["case02_offline_event_update_06.jpg", "tall"],
+                            ["case02_offline_event_update_07.jpg", "tall"],
+                            ["case02_offline_event_update_08.jpg", "tall"],
+                            ["case02_offline_event_update_09.jpg", "wide"],
+                            ["case02_offline_event_update_10.jpg", "wide"],
+                            ["case02_offline_event_update_11.jpg", "wide"],
+                            ["case02_offline_event_update_12.jpg", "wide"],
+                            ["case02_offline_event_update_13.jpg", "tall"],
+                            ["case02_offline_event_update_14.jpg", "wide"],
+                            ["case02_offline_event_update_15.jpg", "wide"],
+                            ["case02_offline_event_update_16.jpg", "tall"],
+                            ["case02_offline_event_update_17.jpg", "tall"],
+                            ["case02_offline_event_update_18.jpg", "wide"],
+                            ["case02_offline_event_update_19.jpg", "wide"]
+                        ]
+                    },
+                    {
+                        title: "Detail Page",
+                        note: "LONG PAGE / E-COMMERCE",
+                        items: [
+                            ["case02_detail_update_01.jpg", "detail-natural"],
+                            ["case02_detail_update_02.jpg", "detail-natural"],
+                            ["case02_detail_update_03.jpg", "detail-natural"],
+                            ["case02_detail_update_04.jpg", "detail-natural"],
+                            ["case02_detail_update_05.jpg", "detail-natural"],
+                            ["case02_detail_update_06.jpg", "detail-natural"]
+                        ]
+                    }
                 ],
+                works: [],
                 motion: [
                     ["motion_fashion_lookbook_01.gif", "AI Lookbook Extension", "用 AI 将服装静态图延展为短视频 Lookbook，作为前期方向测试和动态传播预演。"],
                     ["motion_fashion_lookbook_02.gif", "AI Fashion Motion", "动态片段用于补充人物氛围、镜头节奏和服装表现力，最终仍由设计师筛选与修正。"]
@@ -3073,6 +3138,36 @@
 
         const img = (name, alt = "") => `<img src="${A + name}" alt="${alt}" loading="lazy">`;
 
+        function renderWorks(item) {
+            if (item.workGroups && item.workGroups.length) {
+                return item.workGroups.map(group => `
+                    <section class="work-group">
+                        <div class="work-group-head">
+                            <h5 class="display">${group.title}</h5>
+                            <span class="mono">${group.note}</span>
+                        </div>
+                        <div class="work-gallery">
+                            ${group.items.map(([src, size]) => `
+                                <button class="${size} hoverable" type="button" data-lightbox="${A + src}">
+                                    ${img(src, item.title)}
+                                </button>
+                            `).join("")}
+                        </div>
+                    </section>
+                `).join("");
+            }
+
+            return `
+                <div class="work-gallery">
+                    ${item.works.map(([src, size]) => `
+                        <button class="${size} hoverable" type="button" data-lightbox="${A + src}">
+                            ${img(src, item.title)}
+                        </button>
+                    `).join("")}
+                </div>
+            `;
+        }
+
         function renderVisualGrid() {
             const grid = document.getElementById("visual-grid");
             grid.innerHTML = gridItems.map(([src, size, label], index) => `
@@ -3176,13 +3271,7 @@
                                 <h4 class="display">Selected Works</h4>
                                 <p>按品牌识别、商业应用和传播场景组织作品，展示从视觉方向到执行落地的完整度。</p>
                             </div>
-                            <div class="work-gallery">
-                                ${item.works.map(([src, size]) => `
-                                    <button class="${size} hoverable" type="button" data-lightbox="${A + src}">
-                                        ${img(src, item.title)}
-                                    </button>
-                                `).join("")}
-                            </div>
+                            ${renderWorks(item)}
 
                             ${item.detailSlices ? `
                                 <div class="gallery-heading" style="margin-top: 72px;">
