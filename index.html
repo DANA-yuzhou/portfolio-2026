@@ -1566,8 +1566,8 @@
         .work-gallery button.detail {
             grid-column: span 3;
             min-height: 0;
-            background: #f5f0ea;
-            border-color: rgba(140, 255, 0, 0.28);
+            background: transparent;
+            border: 0;
         }
 
         .work-gallery button.detail img {
@@ -1580,6 +1580,27 @@
         .work-gallery button.detail:hover img {
             transform: none;
             filter: contrast(1.04);
+        }
+
+        #case-02 .work-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        #case-02 .work-gallery button.detail {
+            flex: 0 0 auto;
+            width: auto;
+            max-width: 100%;
+            padding: 0;
+            overflow: visible;
+        }
+
+        #case-02 .work-gallery button.detail img {
+            width: auto;
+            max-width: min(100%, 667px);
+            height: auto;
         }
 
         .gallery-heading {
@@ -2052,8 +2073,20 @@
                 min-height: 280px;
             }
 
-            .work-gallery button.detail {
+            .work-gallery button.detail,
+            #case-02 .work-gallery button.detail {
                 min-height: 0;
+            }
+
+            #case-02 .work-gallery {
+                display: flex;
+                gap: 10px;
+            }
+
+            #case-02 .work-gallery button.detail,
+            #case-02 .work-gallery button.detail img {
+                width: 100%;
+                max-width: 100%;
             }
 
             .visual-cell,
@@ -2729,38 +2762,12 @@
                     ["Outcome", "通过统一画面网感、排版节奏和内容封面策略，小红书笔记点击呈明显提升趋势，线上内容也更容易形成系列感和品牌识别。"]
                 ],
                 works: [
-                    ["case02_portrait_01.jpg", "wide"],
-                    ["case02_portrait_02.jpg", "wide"],
-                    ["case02_portrait_03.jpg", ""],
-                    ["case02_portrait_04.jpg", ""],
-                    ["case02_portrait_05.jpg", "tall"],
-                    ["case02_portrait_06.jpg", "tall"],
-                    ["case02_still_01.jpg", "tall"],
-                    ["case02_still_02.jpg", "tall"],
-                    ["case02_online_01.jpg", "tall"],
-                    ["case02_online_02.jpg", "tall"],
-                    ["case02_online_06.jpg", "tall"],
                     ["case02_detail_01.jpg", "detail"],
                     ["case02_detail_02.jpg", "detail"],
                     ["case02_detail_03.jpg", "detail"],
                     ["case02_detail_04.jpg", "detail"],
                     ["case02_detail_05.jpg", "detail"],
-                    ["case02_detail_06.jpg", "detail"],
-                    ["case02_ai_fashion_01.jpg", "tall"],
-                    ["case02_ai_fashion_02.jpg", "tall"],
-                    ["case02_ai_fashion_03.jpg", "tall"],
-                    ["case02_ai_fashion_04.jpg", "tall"],
-                    ["case02_ai_fashion_05.jpg", "tall"],
-                    ["case02_ai_fashion_06.jpg", "tall"],
-                    ["case02_ai_fashion_07.jpg", "tall"],
-                    ["case02_ai_fashion_08.jpg", "tall"],
-                    ["case02_ai_fashion_09.jpg", "tall"],
-                    ["case02_ai_fashion_10.jpg", "tall"],
-                    ["case02_ai_fashion_11.jpg", "tall"],
-                    ["case02_ai_fashion_12.jpg", "tall"],
-                    ["case02_ai_fashion_13.jpg", "tall"],
-                    ["case02_ai_fashion_14.jpg", "tall"],
-                    ["case02_ai_fashion_15.jpg", "tall"]
+                    ["case02_detail_06.jpg", "detail"]
                 ],
                 motion: [
                     ["motion_fashion_lookbook_01.gif", "AI Lookbook Extension", "用 AI 将服装静态图延展为短视频 Lookbook，作为前期方向测试和动态传播预演。"],
