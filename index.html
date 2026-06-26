@@ -1623,6 +1623,31 @@
             filter: none;
         }
 
+        #case-02 .work-gallery {
+            display: block;
+            columns: 4 260px;
+            column-gap: 12px;
+        }
+
+        #case-02 .work-gallery button,
+        #case-02 .work-gallery button.wide,
+        #case-02 .work-gallery button.tall,
+        #case-02 .work-gallery button.detail-natural {
+            display: inline-block;
+            width: 100%;
+            min-height: 0;
+            margin: 0 0 12px;
+            break-inside: avoid;
+            vertical-align: top;
+        }
+
+        #case-02 .work-gallery img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
         .gallery-heading {
             display: flex;
             justify-content: space-between;
@@ -2790,9 +2815,6 @@
                     ["case02_portrait_06.jpg", "tall"],
                     ["case02_still_01.jpg", "tall"],
                     ["case02_still_02.jpg", "tall"],
-                    ["case02_online_01.jpg", "tall"],
-                    ["case02_online_02.jpg", "tall"],
-                    ["case02_online_06.jpg", "tall"],
                     ["case02_ai_fashion_01.jpg", "tall"],
                     ["case02_ai_fashion_02.jpg", "tall"],
                     ["case02_ai_fashion_03.jpg", "tall"],
@@ -2804,7 +2826,6 @@
                     ["case02_ai_fashion_09.jpg", "tall"],
                     ["case02_ai_fashion_10.jpg", "tall"],
                     ["case02_ai_fashion_11.jpg", "tall"],
-                    ["case02_ai_fashion_12.jpg", "tall"],
                     ["case02_ai_fashion_13.jpg", "tall"],
                     ["case02_ai_fashion_14.jpg", "tall"],
                     ["case02_ai_fashion_15.jpg", "tall"],
