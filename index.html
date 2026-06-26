@@ -965,11 +965,6 @@
             line-height: 1.65;
         }
 
-        a[href="#case-04"],
-        #case-04 {
-            display: none !important;
-        }
-
         .section {
             position: relative;
             padding: 112px 6vw;
@@ -2843,12 +2838,12 @@
                 time: "Selected commercial works",
                 role: "产品 banner / 详情页 / 包装质感",
                 hero: "case04_hero_motion_19x6.gif",
-                preview: "case04_vi_02.jpg",
+                preview: "case04_banner_01.jpg",
                 summary: "在微商/私域销售场景中重塑产品高级感、功效表达与电商视觉质感。",
                 highlightWork: "我负责产品主视觉、banner、详情页和功效表达的视觉优化，让产品卖点、包装质感和人物/使用场景之间形成更统一的表达。",
                 highlightOutcome: "在原有商业基础上完成质感升级，让产品图从单纯卖点堆叠转向更清晰、更有护肤品氛围的视觉表达，提升页面阅读感和品牌可信度。",
                 viNote: "护肤品案例先呈现粉嫩、柔光、包装系列感的 VI 开场，再展示详情页、功效表达、人物场景和产品质感图。",
-                vi: ["case04_vi_01.jpg", "case04_vi_02.jpg", "case04_vi_03.jpg", "case04_vi_04.jpg"],
+                vi: [],
                 meta: [
                     ["Brand", "BSLR / BAOKOUCHI"],
                     ["Role", "产品主视觉、详情页、功效卖点优化"],
@@ -2863,12 +2858,6 @@
                     ["Outcome", "在原有商业基础上完成质感升级，让产品图从单纯卖点堆叠转向更清晰、更有护肤品氛围的视觉表达。"]
                 ],
                 works: [
-                    ["case04_vi_05.jpg", "wide"],
-                    ["case04_vi_06.jpg", "wide"],
-                    ["case04_vi_07.jpg", "wide"],
-                    ["case04_vi_08.jpg", "wide"],
-                    ["case04_banner_07.jpg", "wide"],
-                    ["case04_banner_08.jpg", "wide"],
                     ["case04_banner_01.jpg", "tall"],
                     ["case04_banner_02.jpg", "tall"],
                     ["case04_banner_03.jpg", "tall"],
@@ -2926,8 +2915,6 @@
             }
         ];
 
-        const visibleCases = cases.filter(item => item.id !== "case-04");
-
         const gridItems = [
             ["practice_01.jpg", "", "Perfume Render 01"],
             ["practice_02.jpg", "", "Perfume Render 02"],
@@ -2961,7 +2948,7 @@
 
         function renderProjectList() {
             const list = document.getElementById("project-list");
-            list.innerHTML = visibleCases.map(item => `
+            list.innerHTML = cases.map(item => `
                 <a class="project-row hoverable" href="#${item.id}" data-preview="${A + item.preview}">
                     <span class="num mono">${item.index} / _</span>
                     <div>
@@ -2976,7 +2963,7 @@
 
         function renderCases() {
             const container = document.getElementById("case-container");
-            container.innerHTML = visibleCases.map(item => `
+            container.innerHTML = cases.map(item => `
                 <section id="${item.id}" class="case-section">
                     <div class="case-hero">
                         ${img(item.hero, item.title)}
@@ -3002,22 +2989,24 @@
 
                     <div class="case-body">
                         <div class="case-body-inner">
-                            <div class="vi-strip">
-                                <div class="vi-intro">
-                                    <div>
-                                        <span class="case-eyebrow mono">[ VISUAL IDENTITY FIRST ]</span>
-                                        <h4 class="display">${item.label}<br>VI ENTRY</h4>
+                            ${item.vi.length ? `
+                                <div class="vi-strip">
+                                    <div class="vi-intro">
+                                        <div>
+                                            <span class="case-eyebrow mono">[ VISUAL IDENTITY FIRST ]</span>
+                                            <h4 class="display">${item.label}<br>VI ENTRY</h4>
+                                        </div>
+                                        <p>${item.viNote}</p>
                                     </div>
-                                    <p>${item.viNote}</p>
+                                    <div class="vi-images">
+                                        ${item.vi.map(src => `
+                                            <button class="hoverable" type="button" data-lightbox="${A + src}">
+                                                ${img(src, item.label + " VI")}
+                                            </button>
+                                        `).join("")}
+                                    </div>
                                 </div>
-                                <div class="vi-images">
-                                    ${item.vi.map(src => `
-                                        <button class="hoverable" type="button" data-lightbox="${A + src}">
-                                            ${img(src, item.label + " VI")}
-                                        </button>
-                                    `).join("")}
-                                </div>
-                            </div>
+                            ` : ""}
 
                             <div class="case-narrative">
                                 <h4 class="mono">Project Story<br>${item.en}</h4>
