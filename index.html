@@ -1722,11 +1722,18 @@
             overflow: hidden;
         }
 
-        .motion-card button {
+        .motion-card button,
+        .motion-card .motion-media {
             overflow: hidden;
             min-height: 330px;
             aspect-ratio: 16 / 9;
             background: #050505;
+        }
+
+        .motion-card .motion-media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .motion-card.is-portrait {
@@ -1742,6 +1749,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .motion-card video {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            background: #050505;
         }
 
         .motion-card.is-portrait img {
@@ -2216,7 +2232,8 @@
                 min-width: 0;
             }
 
-            .motion-card button {
+            .motion-card button,
+            .motion-card .motion-media {
                 width: 100%;
                 min-width: 0;
                 min-height: 0;
@@ -2944,8 +2961,11 @@
                 ],
                 works: [],
                 motion: [
-                    ["motion_fashion_lookbook_01.gif", "AI Lookbook Extension", "用 AI 将服装静态图延展为短视频 Lookbook，作为前期方向测试和动态传播预演。"],
-                    ["motion_fashion_lookbook_02.gif", "AI Fashion Motion", "动态片段用于补充人物氛围、镜头节奏和服装表现力，最终仍由设计师筛选与修正。"]
+                    ["case02_motion_video_01.mp4", "AI Motion 01", "AI 服装动态片段，用于展示人物氛围、镜头节奏和 Lookbook 动态效果。"],
+                    ["case02_motion_video_02.mp4", "AI Motion 02", "AI 服装动态片段，用于补充服装系列的动态视觉呈现。"],
+                    ["case02_motion_video_03.mp4", "AI Motion 03", "AI 服装动态片段，展示人物姿态、服装细节和商业提案氛围。"],
+                    ["case02_motion_video_04.mp4", "AI Motion 04", "AI 服装动态片段，保持竖屏画面的完整人物视觉。"],
+                    ["case02_motion_video_05.mp4", "AI Motion 05", "AI 服装动态片段，用于视频提案与内容动态延展。"]
                 ]
             },
             {
@@ -3293,17 +3313,25 @@
                                     <p>动态视觉延展用于呈现产品、人物与镜头节奏，让静态视觉在提案和内容传播中更具氛围感。</p>
                                 </div>
                                 <div class="motion-grid">
-                                    ${item.motion.map(([src, title, text]) => `
-                                        <article class="motion-card ${src.includes("motion_fashion_lookbook_") ? "is-portrait" : ""}">
-                                            <button class="hoverable" type="button" data-lightbox="${A + src}">
-                                                ${img(src, title)}
-                                            </button>
+                                    ${item.motion.map(([src, title, text]) => {
+                                        const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+                                        return `
+                                        <article class="motion-card ${src.includes("motion_fashion_lookbook_") ? "is-portrait" : ""} ${isVideo ? "is-video" : ""}">
+                                            ${isVideo ? `
+                                                <div class="motion-media hoverable">
+                                                    <video src="${A + src}" autoplay muted loop playsinline preload="metadata"></video>
+                                                </div>
+                                            ` : `
+                                                <button class="hoverable" type="button" data-lightbox="${A + src}">
+                                                    ${img(src, title)}
+                                                </button>
+                                            `}
                                             <div>
                                                 <span class="mono">${title}</span>
                                                 <p>${text}</p>
                                             </div>
                                         </article>
-                                    `).join("")}
+                                    `}).join("")}
                                 </div>
                             ` : ""}
                         </div>
