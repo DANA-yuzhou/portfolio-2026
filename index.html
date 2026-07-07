@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>代凤娇 2026 视觉设计作品集</title>
     <link rel="icon" href="data:,">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Condiment&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preload" href="assets/fonts/fonts.css" as="style">
+    <link href="assets/fonts/fonts.css" rel="stylesheet">
+    <script src="assets/vendor/three.min.js"></script>
     <style>
         :root {
             --void: #050505;
@@ -1024,7 +1023,8 @@
             cursor: none;
         }
 
-        .homepage-motion-frame img {
+        .homepage-motion-frame img,
+        .homepage-motion-frame video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -1271,7 +1271,8 @@
             overflow: hidden;
         }
 
-        .case-hero img {
+        .case-hero img,
+        .case-hero video {
             position: absolute;
             top: 0;
             left: 0;
@@ -1760,6 +1761,14 @@
             background: #050505;
         }
 
+        .lazy-video {
+            background: #050505;
+        }
+
+        .lazy-img {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
         .motion-card.is-portrait img {
             object-fit: contain;
             background: #050505;
@@ -1914,12 +1923,17 @@
             display: grid;
         }
 
-        .lightbox img {
+        .lightbox img,
+        .lightbox video {
             max-width: min(96vw, 1500px);
             max-height: 88vh;
             object-fit: contain;
             border: 1px solid var(--line);
             background: var(--panel);
+        }
+
+        .lightbox video {
+            display: none;
         }
 
         .lightbox button {
@@ -2335,7 +2349,7 @@
             z-index: 1;
             pointer-events: none;
             background-color: #010828;
-            background-image: url("assets/portfolio/fashion-week-pano.png");
+            background-image: url("assets/portfolio/opt/fashion-week-pano.webp");
             background-repeat: no-repeat;
             background-position: var(--pano-x) center;
             background-size: auto 100%;
@@ -2344,7 +2358,7 @@
 
         @media (max-width: 768px) {
             .intro-panorama-fallback {
-                background-image: url("assets/portfolio/fashion-week-pano-mobile.jpg");
+                background-image: url("assets/portfolio/opt/fashion-week-pano-mobile.webp");
             }
         }
 
@@ -2624,7 +2638,7 @@
                             <span>↓</span>
                         </div>
                         <div class="intro-home-qr">
-                            <img src="assets/portfolio/wechat_contact_qr_square.jpg" alt="WeChat QR code">
+                            <img src="assets/portfolio/opt/wechat_contact_qr_square.webp" alt="WeChat QR code">
                             <div>
                                 <span class="mono">WECHAT</span>
                                 <p>Scan QR to add WeChat / dana8888886.</p>
@@ -2681,8 +2695,8 @@
                         以服装造型和人物状态为视觉主线，展示内容企划中的色彩氛围、镜头感和动态延展方向。
                     </p>
                 </div>
-                <button class="homepage-motion-frame hoverable" type="button" data-lightbox="assets/portfolio/homepage_lookbook_16x9.gif">
-                    <img src="assets/portfolio/homepage_lookbook_16x9.gif" alt="AI 结合产品做的模特 look book GIF" loading="lazy" decoding="async">
+                <button class="homepage-motion-frame hoverable" type="button" data-lightbox="assets/portfolio/opt/homepage_lookbook_16x9.mp4">
+                    <video class="lazy-video" data-src="assets/portfolio/opt/homepage_lookbook_16x9.mp4" autoplay muted loop playsinline preload="none" aria-label="AI 结合产品做的模特 look book"></video>
                 </button>
             </div>
         </section>
@@ -2745,7 +2759,7 @@
                 </div>
                 <div class="contact-panel">
                     <div class="contact-qr">
-                        <img src="assets/portfolio/wechat_contact_qr_square.jpg" alt="WeChat QR code">
+                        <img src="assets/portfolio/opt/wechat_contact_qr_square.webp" alt="WeChat QR code">
                         <div>
                             <span class="mono">WECHAT QR</span>
                             <p>Scan QR to add WeChat / dana8888886.</p>
@@ -2783,6 +2797,7 @@
     <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
         <button class="hoverable" type="button" aria-label="关闭预览">×</button>
         <img src="" alt="">
+        <video controls muted loop playsinline></video>
     </div>
 
     <script>
@@ -2797,13 +2812,13 @@
                 en: "Shenzhen Fashion Week Full Visual System",
                 time: "2024.10 - 2025.5",
                 role: "活动主视觉 / 现场物料 / 摄影修图",
-                hero: "case01_hero_motion_19x6.gif",
-                preview: "case01_vi_01.jpg",
+                hero: "opt/case01_hero_motion_19x6.mp4",
+                preview: "opt/case01_vi_01.webp",
                 summary: "两周内完成从活动主视觉到现场物料、屏幕视觉与摄影修图的完整落地。",
                 highlightWork: "我负责从活动主视觉方向到具体物料执行的完整视觉输出，包括主 KV、海报、展台/秀场屏幕、现场氛围物料，以及活动摄影和后期修图。项目中需要根据品牌服装风格、现场空间与传播场景快速统一视觉语言。",
                 highlightOutcome: "在有限时间内完成活动视觉的集中落地，保证线下空间、传播海报和活动回顾素材具有统一识别度，为品牌在时装周场景中的专业呈现提供支撑。",
                 viNote: "先用品牌 VI 和活动视觉建立识别，再展开现场、屏幕、物料与传播图，呈现服装品牌在线下活动中的统一视觉系统。",
-                vi: ["case01_vi_01.jpg", "case01_vi_02.jpg", "case01_vi_03.jpg", "case01_vi_04.jpg"],
+                vi: ["opt/case01_vi_01.webp", "opt/case01_vi_02.webp", "opt/case01_vi_03.webp", "opt/case01_vi_04.webp"],
                 meta: [
                     ["Brand", "GUYUERIJI 古悦日季"],
                     ["Role", "视觉设计师 / 主要执行"],
@@ -2818,14 +2833,14 @@
                     ["Outcome", "在有限时间内完成活动视觉的集中落地，保证线下空间、传播海报和活动回顾素材具有统一识别度，为品牌在时装周场景中的专业呈现提供支撑。"]
                 ],
                 works: [
-                    ["case01_work_01.jpg", "wide"],
-                    ["case01_work_02.jpg", "wide"],
-                    ["case01_work_03.jpg", ""],
-                    ["case01_work_04.jpg", ""],
-                    ["case01_work_05.jpg", ""],
-                    ["case01_work_06.jpg", ""],
-                    ["case01_work_07.jpg", ""],
-                    ["case01_vi_05.jpg", "wide"]
+                    ["opt/case01_work_01.webp", "wide"],
+                    ["opt/case01_work_02.webp", "wide"],
+                    ["opt/case01_work_03.webp", ""],
+                    ["opt/case01_work_04.webp", ""],
+                    ["opt/case01_work_05.webp", ""],
+                    ["opt/case01_work_06.webp", ""],
+                    ["opt/case01_work_07.webp", ""],
+                    ["opt/case01_vi_05.webp", "wide"]
                 ],
                 motion: []
             },
@@ -2837,13 +2852,13 @@
                 en: "Fashion Content Visual System",
                 time: "2024.10 - 2025.5",
                 role: "拍摄修图 / 电商视觉 / 小红书内容",
-                hero: "case02_hero_motion_19x6.gif",
-                preview: "case02_portrait_04.jpg",
+                hero: "opt/case02_hero_motion_19x6.mp4",
+                preview: "opt/case02_portrait_04.webp",
                 summary: "围绕拍摄、修图、电商页面、小红书内容与大促视觉，建立统一的线上品牌表达。",
                 highlightWork: "我参与并执行拍摄、修图、设计和视频后期，负责把模特大片、静物图、详情页、大促 KV 与小红书内容整合成更统一的视觉输出。",
                 highlightOutcome: "通过统一画面网感、排版节奏和内容封面策略，小红书笔记点击呈明显提升趋势，线上内容也更容易形成系列感和品牌识别。",
                 viNote: "同一品牌 VI 下继续延展线上内容系统，将模特大片、静物细节、电商页面、小红书视觉和 AI Lookbook 组织成可持续更新的内容资产。",
-                vi: ["case01_vi_01.jpg", "case01_vi_03.jpg", "case01_vi_05.jpg", "case02_online_06.jpg"],
+                vi: ["opt/case01_vi_01.webp", "opt/case01_vi_03.webp", "opt/case01_vi_05.webp", "opt/case02_online_06.webp"],
                 meta: [
                     ["Brand", "GUYUERIJI 古悦日季"],
                     ["Role", "拍摄、剪辑、设计、修图执行"],
@@ -2862,110 +2877,110 @@
                         title: "Original Campaign",
                         note: "LOOKBOOK / PRODUCT / AI EXTENSION",
                         items: [
-                            ["case02_portrait_01.jpg", "wide"],
-                            ["case02_portrait_02.jpg", "wide"],
-                            ["case02_portrait_03.jpg", ""],
-                            ["case02_portrait_04.jpg", ""],
-                            ["case02_portrait_05.jpg", "tall"],
-                            ["case02_portrait_06.jpg", "tall"],
-                            ["case02_still_01.jpg", "tall"],
-                            ["case02_still_02.jpg", "tall"],
-                            ["case02_ai_fashion_01.jpg", "tall"],
-                            ["case02_ai_fashion_02.jpg", "tall"],
-                            ["case02_ai_fashion_03.jpg", "tall"],
-                            ["case02_ai_fashion_04.jpg", "tall"],
-                            ["case02_ai_fashion_05.jpg", "tall"],
-                            ["case02_ai_fashion_06.jpg", "tall"],
-                            ["case02_ai_fashion_07.jpg", "tall"],
-                            ["case02_ai_fashion_08.jpg", "tall"],
-                            ["case02_ai_fashion_09.jpg", "tall"],
-                            ["case02_ai_fashion_10.jpg", "tall"],
-                            ["case02_ai_fashion_11.jpg", "tall"],
-                            ["case02_ai_fashion_13.jpg", "tall"],
-                            ["case02_ai_fashion_14.jpg", "tall"],
-                            ["case02_ai_fashion_15.jpg", "tall"]
+                            ["opt/case02_portrait_01.webp", "wide"],
+                            ["opt/case02_portrait_02.webp", "wide"],
+                            ["opt/case02_portrait_03.webp", ""],
+                            ["opt/case02_portrait_04.webp", ""],
+                            ["opt/case02_portrait_05.webp", "tall"],
+                            ["opt/case02_portrait_06.webp", "tall"],
+                            ["opt/case02_still_01.webp", "tall"],
+                            ["opt/case02_still_02.webp", "tall"],
+                            ["opt/case02_ai_fashion_01.webp", "tall"],
+                            ["opt/case02_ai_fashion_02.webp", "tall"],
+                            ["opt/case02_ai_fashion_03.webp", "tall"],
+                            ["opt/case02_ai_fashion_04.webp", "tall"],
+                            ["opt/case02_ai_fashion_05.webp", "tall"],
+                            ["opt/case02_ai_fashion_06.webp", "tall"],
+                            ["opt/case02_ai_fashion_07.webp", "tall"],
+                            ["opt/case02_ai_fashion_08.webp", "tall"],
+                            ["opt/case02_ai_fashion_09.webp", "tall"],
+                            ["opt/case02_ai_fashion_10.webp", "tall"],
+                            ["opt/case02_ai_fashion_11.webp", "tall"],
+                            ["opt/case02_ai_fashion_13.webp", "tall"],
+                            ["opt/case02_ai_fashion_14.webp", "tall"],
+                            ["opt/case02_ai_fashion_15.webp", "tall"]
                         ]
                     },
                     {
                         title: "Photography",
                         note: "SHOOTING / RETOUCHING",
                         items: [
-                            ["case02_photo_update_01.jpg", "tall"],
-                            ["case02_photo_update_02.jpg", "tall"],
-                            ["case02_photo_update_03.jpg", "tall"],
-                            ["case02_photo_update_04.jpg", "tall"],
-                            ["case02_photo_update_05.jpg", "tall"],
-                            ["case02_photo_update_06.jpg", "tall"],
-                            ["case02_photo_update_07.jpg", "tall"],
-                            ["case02_photo_update_08.jpg", "tall"],
-                            ["case02_photo_update_09.jpg", "tall"],
-                            ["case02_photo_update_10.jpg", "tall"],
-                            ["case02_photo_update_11.jpg", "tall"],
-                            ["case02_photo_update_12.jpg", "tall"],
-                            ["case02_photo_update_13.jpg", "tall"],
-                            ["case02_photo_update_14.jpg", "tall"]
+                            ["opt/case02_photo_update_01.webp", "tall"],
+                            ["opt/case02_photo_update_02.webp", "tall"],
+                            ["opt/case02_photo_update_03.webp", "tall"],
+                            ["opt/case02_photo_update_04.webp", "tall"],
+                            ["opt/case02_photo_update_05.webp", "tall"],
+                            ["opt/case02_photo_update_06.webp", "tall"],
+                            ["opt/case02_photo_update_07.webp", "tall"],
+                            ["opt/case02_photo_update_08.webp", "tall"],
+                            ["opt/case02_photo_update_09.webp", "tall"],
+                            ["opt/case02_photo_update_10.webp", "tall"],
+                            ["opt/case02_photo_update_11.webp", "tall"],
+                            ["opt/case02_photo_update_12.webp", "tall"],
+                            ["opt/case02_photo_update_13.webp", "tall"],
+                            ["opt/case02_photo_update_14.webp", "tall"]
                         ]
                     },
                     {
                         title: "Online Banner",
                         note: "E-COMMERCE / SOCIAL",
                         items: [
-                            ["case02_online_banner_update_01.jpg", "tall"],
-                            ["case02_online_banner_update_02.jpg", "tall"],
-                            ["case02_online_banner_update_03.jpg", "tall"],
-                            ["case02_online_banner_update_04.jpg", "tall"],
-                            ["case02_online_banner_update_05.jpg", "tall"],
-                            ["case02_online_banner_update_06.jpg", "tall"],
-                            ["case02_online_banner_update_07.jpg", "tall"],
-                            ["case02_online_banner_update_08.jpg", "tall"],
-                            ["case02_online_banner_update_09.jpg", "tall"]
+                            ["opt/case02_online_banner_update_01.webp", "tall"],
+                            ["opt/case02_online_banner_update_02.webp", "tall"],
+                            ["opt/case02_online_banner_update_03.webp", "tall"],
+                            ["opt/case02_online_banner_update_04.webp", "tall"],
+                            ["opt/case02_online_banner_update_05.webp", "tall"],
+                            ["opt/case02_online_banner_update_06.webp", "tall"],
+                            ["opt/case02_online_banner_update_07.webp", "tall"],
+                            ["opt/case02_online_banner_update_08.webp", "tall"],
+                            ["opt/case02_online_banner_update_09.webp", "tall"]
                         ]
                     },
                     {
                         title: "Offline Event",
                         note: "RUNWAY / SHOWROOM / SALON",
                         items: [
-                            ["case02_offline_event_update_01.jpg", "tall"],
-                            ["case02_offline_event_update_02.jpg", "tall"],
-                            ["case02_offline_event_update_03.jpg", "tall"],
-                            ["case02_offline_event_update_04.jpg", "tall"],
-                            ["case02_offline_event_update_05.jpg", "tall"],
-                            ["case02_offline_event_update_06.jpg", "tall"],
-                            ["case02_offline_event_update_07.jpg", "tall"],
-                            ["case02_offline_event_update_08.jpg", "tall"],
-                            ["case02_offline_event_update_09.jpg", "wide"],
-                            ["case02_offline_event_update_10.jpg", "wide"],
-                            ["case02_offline_event_update_11.jpg", "wide"],
-                            ["case02_offline_event_update_12.jpg", "wide"],
-                            ["case02_offline_event_update_13.jpg", "tall"],
-                            ["case02_offline_event_update_14.jpg", "wide"],
-                            ["case02_offline_event_update_15.jpg", "wide"],
-                            ["case02_offline_event_update_16.jpg", "tall"],
-                            ["case02_offline_event_update_17.jpg", "tall"],
-                            ["case02_offline_event_update_18.jpg", "wide"],
-                            ["case02_offline_event_update_19.jpg", "wide"]
+                            ["opt/case02_offline_event_update_01.webp", "tall"],
+                            ["opt/case02_offline_event_update_02.webp", "tall"],
+                            ["opt/case02_offline_event_update_03.webp", "tall"],
+                            ["opt/case02_offline_event_update_04.webp", "tall"],
+                            ["opt/case02_offline_event_update_05.webp", "tall"],
+                            ["opt/case02_offline_event_update_06.webp", "tall"],
+                            ["opt/case02_offline_event_update_07.webp", "tall"],
+                            ["opt/case02_offline_event_update_08.webp", "tall"],
+                            ["opt/case02_offline_event_update_09.webp", "wide"],
+                            ["opt/case02_offline_event_update_10.webp", "wide"],
+                            ["opt/case02_offline_event_update_11.webp", "wide"],
+                            ["opt/case02_offline_event_update_12.webp", "wide"],
+                            ["opt/case02_offline_event_update_13.webp", "tall"],
+                            ["opt/case02_offline_event_update_14.webp", "wide"],
+                            ["opt/case02_offline_event_update_15.webp", "wide"],
+                            ["opt/case02_offline_event_update_16.webp", "tall"],
+                            ["opt/case02_offline_event_update_17.webp", "tall"],
+                            ["opt/case02_offline_event_update_18.webp", "wide"],
+                            ["opt/case02_offline_event_update_19.webp", "wide"]
                         ]
                     },
                     {
                         title: "Detail Page",
                         note: "LONG PAGE / E-COMMERCE",
                         items: [
-                            ["case02_detail_update_01.jpg", "detail-natural"],
-                            ["case02_detail_update_02.jpg", "detail-natural"],
-                            ["case02_detail_update_03.jpg", "detail-natural"],
-                            ["case02_detail_update_04.jpg", "detail-natural"],
-                            ["case02_detail_update_05.jpg", "detail-natural"],
-                            ["case02_detail_update_06.jpg", "detail-natural"]
+                            ["opt/case02_detail_update_01.webp", "detail-natural"],
+                            ["opt/case02_detail_update_02.webp", "detail-natural"],
+                            ["opt/case02_detail_update_03.webp", "detail-natural"],
+                            ["opt/case02_detail_update_04.webp", "detail-natural"],
+                            ["opt/case02_detail_update_05.webp", "detail-natural"],
+                            ["opt/case02_detail_update_06.webp", "detail-natural"]
                         ]
                     }
                 ],
                 works: [],
                 motion: [
-                    ["case02_motion_video_01.mp4", "AI Motion 01", "AI 服装动态片段，用于展示人物氛围、镜头节奏和 Lookbook 动态效果。"],
-                    ["case02_motion_video_02.mp4", "AI Motion 02", "AI 服装动态片段，用于补充服装系列的动态视觉呈现。"],
-                    ["case02_motion_video_03.mp4", "AI Motion 03", "AI 服装动态片段，展示人物姿态、服装细节和商业提案氛围。"],
-                    ["case02_motion_video_04.mp4", "AI Motion 04", "AI 服装动态片段，保持竖屏画面的完整人物视觉。"],
-                    ["case02_motion_video_05.mp4", "AI Motion 05", "AI 服装动态片段，用于视频提案与内容动态延展。"]
+                    ["opt/case02_motion_video_01.mp4", "AI Motion 01", "AI 服装动态片段，用于展示人物氛围、镜头节奏和 Lookbook 动态效果。"],
+                    ["opt/case02_motion_video_02.mp4", "AI Motion 02", "AI 服装动态片段，用于补充服装系列的动态视觉呈现。"],
+                    ["opt/case02_motion_video_03.mp4", "AI Motion 03", "AI 服装动态片段，展示人物姿态、服装细节和商业提案氛围。"],
+                    ["opt/case02_motion_video_04.mp4", "AI Motion 04", "AI 服装动态片段，保持竖屏画面的完整人物视觉。"],
+                    ["opt/case02_motion_video_05.mp4", "AI Motion 05", "AI 服装动态片段，用于视频提案与内容动态延展。"]
                 ]
             },
             {
@@ -2976,13 +2991,13 @@
                 en: "Home Brand Visual Foundation",
                 time: "2025.4 - 2025.11",
                 role: "品牌视觉 / 电商页面 / 小红书内容",
-                hero: "case03_hero_motion_19x6.gif",
-                preview: "case03_home_05.jpg",
+                hero: "opt/case03_hero_motion_19x6.mp4",
+                preview: "opt/case03_home_05.webp",
                 summary: "为建筑公司旗下家居子品牌建立电商、小红书与基础品牌视觉体系。",
                 highlightWork: "我参与品牌视觉方向的建立，协助把品牌定位转化为可落地的电商页面、产品详情、营销素材和小红书内容。项目中需要兼顾建筑公司背景带来的空间审美，以及家居产品面向消费者的温度感和购买说服力。",
                 highlightOutcome: "从无到有完成家居品牌线上视觉基础，为品牌后续电商销售、小红书种草和与母公司业务联动提供可延展的视觉框架。",
                 viNote: "漫诺案例以 VI 和空间感作为主线，强调从品牌气质、材质氛围到电商页面结构的完整搭建。",
-                vi: ["case03_home_01.jpg", "case03_home_02.jpg", "case03_home_03.jpg", "case03_home_04.jpg"],
+                vi: ["opt/case03_home_01.webp", "opt/case03_home_02.webp", "opt/case03_home_03.webp", "opt/case03_home_04.webp"],
                 meta: [
                     ["Brand", "Manoirs Gallery 漫诺"],
                     ["Role", "视觉方向、电商内容、传播素材搭建"],
@@ -2997,22 +3012,22 @@
                     ["Outcome", "从无到有完成家居品牌线上视觉基础，为品牌后续电商销售、小红书种草和与母公司业务联动提供可延展的视觉框架。"]
                 ],
                 works: [
-                    ["case03_photo_update_01.jpg", "tall"],
-                    ["case03_photo_update_02.jpg", "tall"],
-                    ["case03_photo_update_03.jpg", "tall"],
-                    ["case03_photo_update_04.jpg", "tall"],
-                    ["case03_photo_update_05.jpg", "tall"],
-                    ["case03_photo_update_06.jpg", "tall"],
-                    ["case03_photo_update_07.jpg", "tall"],
-                    ["case03_photo_update_08.jpg", "tall"],
-                    ["case03_photo_update_09.jpg", "tall"],
-                    ["case03_photo_update_10.jpg", "tall"],
-                    ["case03_photo_update_11.jpg", "tall"],
-                    ["case03_photo_update_12.jpg", "tall"],
-                    ["case03_photo_update_13.jpg", "tall"],
-                    ["case03_photo_update_14.jpg", "tall"],
-                    ["case03_photo_update_15.jpg", "tall"],
-                    ["case03_photo_update_16.jpg", "tall"]
+                    ["opt/case03_photo_update_01.webp", "tall"],
+                    ["opt/case03_photo_update_02.webp", "tall"],
+                    ["opt/case03_photo_update_03.webp", "tall"],
+                    ["opt/case03_photo_update_04.webp", "tall"],
+                    ["opt/case03_photo_update_05.webp", "tall"],
+                    ["opt/case03_photo_update_06.webp", "tall"],
+                    ["opt/case03_photo_update_07.webp", "tall"],
+                    ["opt/case03_photo_update_08.webp", "tall"],
+                    ["opt/case03_photo_update_09.webp", "tall"],
+                    ["opt/case03_photo_update_10.webp", "tall"],
+                    ["opt/case03_photo_update_11.webp", "tall"],
+                    ["opt/case03_photo_update_12.webp", "tall"],
+                    ["opt/case03_photo_update_13.webp", "tall"],
+                    ["opt/case03_photo_update_14.webp", "tall"],
+                    ["opt/case03_photo_update_15.webp", "tall"],
+                    ["opt/case03_photo_update_16.webp", "tall"]
                 ],
                 motion: []
             },
@@ -3024,23 +3039,23 @@
                 en: "Skincare Brand Visual Upgrade",
                 time: "Selected commercial works",
                 role: "产品 banner / 详情页 / 包装质感",
-                hero: "case04_hero_motion_19x6.gif",
-                preview: "case04_banner_01.jpg",
+                hero: "opt/case04_hero_motion_19x6.mp4",
+                preview: "opt/case04_banner_01.webp",
                 summary: "在微商/私域销售场景中重塑产品高级感、功效表达与电商视觉质感。",
                 highlightWork: "我负责产品主视觉、banner、详情页和功效表达的视觉优化，让产品卖点、包装质感和人物/使用场景之间形成更统一的表达。",
                 highlightOutcome: "在原有商业基础上完成质感升级，让产品图从单纯卖点堆叠转向更清晰、更有护肤品氛围的视觉表达，提升页面阅读感和品牌可信度。",
                 viNote: "护肤品案例先呈现粉嫩、柔光、包装系列感的 VI 开场，再展示详情页、功效表达、人物场景和产品质感图。",
                 vi: [
-                    "case04_vi_update_01.jpg",
-                    "case04_vi_update_02.jpg",
-                    "case04_vi_update_03.jpg",
-                    "case04_vi_update_04.jpg",
-                    "case04_vi_update_05.jpg",
-                    "case04_vi_update_06.jpg",
-                    "case04_vi_update_07.jpg",
-                    "case04_vi_update_08.jpg",
-                    "case04_vi_update_09.jpg",
-                    "case04_vi_update_10.jpg"
+                    "opt/case04_vi_update_01.webp",
+                    "opt/case04_vi_update_02.webp",
+                    "opt/case04_vi_update_03.webp",
+                    "opt/case04_vi_update_04.webp",
+                    "opt/case04_vi_update_05.webp",
+                    "opt/case04_vi_update_06.webp",
+                    "opt/case04_vi_update_07.webp",
+                    "opt/case04_vi_update_08.webp",
+                    "opt/case04_vi_update_09.webp",
+                    "opt/case04_vi_update_10.webp"
                 ],
                 meta: [
                     ["Brand", "BSLR / BAOKOUCHI"],
@@ -3056,38 +3071,38 @@
                     ["Outcome", "在原有商业基础上完成质感升级，让产品图从单纯卖点堆叠转向更清晰、更有护肤品氛围的视觉表达。"]
                 ],
                 works: [
-                    ["case04_banner_update_01.jpg", "tall"],
-                    ["case04_banner_update_02.jpg", "tall"],
-                    ["case04_banner_update_03.jpg", "tall"],
-                    ["case04_banner_update_04.jpg", "tall"],
-                    ["case04_banner_update_05.jpg", "tall"],
-                    ["case04_banner_update_06.jpg", "wide"],
-                    ["case04_banner_update_07.jpg", "tall"],
-                    ["case04_banner_update_08.jpg", "tall"],
-                    ["case04_banner_update_09.jpg", "tall"],
-                    ["case04_banner_update_10.jpg", "tall"],
-                    ["case04_banner_update_11.jpg", "tall"],
-                    ["case04_photo_update_01.jpg", "tall"],
-                    ["case04_photo_update_02.jpg", "tall"],
-                    ["case04_photo_update_03.jpg", "tall"],
-                    ["case04_photo_update_04.jpg", "tall"],
-                    ["case04_photo_update_05.jpg", "tall"],
-                    ["case04_photo_update_06.jpg", "tall"],
-                    ["case04_photo_update_07.jpg", "tall"],
-                    ["case04_photo_update_08.jpg", "tall"],
-                    ["case04_photo_update_09.jpg", "tall"],
-                    ["case04_photo_update_10.jpg", "tall"],
-                    ["case04_photo_update_11.jpg", "tall"],
-                    ["case04_photo_update_12.jpg", "tall"],
-                    ["case04_photo_update_13.jpg", "tall"],
-                    ["case04_photo_update_14.jpg", "tall"],
-                    ["case04_photo_update_15.jpg", "tall"],
-                    ["case04_photo_update_16.jpg", "tall"],
-                    ["case04_photo_update_17.jpg", "tall"],
-                    ["case04_photo_update_18.jpg", "tall"],
-                    ["case04_photo_update_19.jpg", "tall"]
+                    ["opt/case04_banner_update_01.webp", "tall"],
+                    ["opt/case04_banner_update_02.webp", "tall"],
+                    ["opt/case04_banner_update_03.webp", "tall"],
+                    ["opt/case04_banner_update_04.webp", "tall"],
+                    ["opt/case04_banner_update_05.webp", "tall"],
+                    ["opt/case04_banner_update_06.webp", "wide"],
+                    ["opt/case04_banner_update_07.webp", "tall"],
+                    ["opt/case04_banner_update_08.webp", "tall"],
+                    ["opt/case04_banner_update_09.webp", "tall"],
+                    ["opt/case04_banner_update_10.webp", "tall"],
+                    ["opt/case04_banner_update_11.webp", "tall"],
+                    ["opt/case04_photo_update_01.webp", "tall"],
+                    ["opt/case04_photo_update_02.webp", "tall"],
+                    ["opt/case04_photo_update_03.webp", "tall"],
+                    ["opt/case04_photo_update_04.webp", "tall"],
+                    ["opt/case04_photo_update_05.webp", "tall"],
+                    ["opt/case04_photo_update_06.webp", "tall"],
+                    ["opt/case04_photo_update_07.webp", "tall"],
+                    ["opt/case04_photo_update_08.webp", "tall"],
+                    ["opt/case04_photo_update_09.webp", "tall"],
+                    ["opt/case04_photo_update_10.webp", "tall"],
+                    ["opt/case04_photo_update_11.webp", "tall"],
+                    ["opt/case04_photo_update_12.webp", "tall"],
+                    ["opt/case04_photo_update_13.webp", "tall"],
+                    ["opt/case04_photo_update_14.webp", "tall"],
+                    ["opt/case04_photo_update_15.webp", "tall"],
+                    ["opt/case04_photo_update_16.webp", "tall"],
+                    ["opt/case04_photo_update_17.webp", "tall"],
+                    ["opt/case04_photo_update_18.webp", "tall"],
+                    ["opt/case04_photo_update_19.webp", "tall"]
                 ],
-                detailSlices: ["case04_detail_slice_update_01.jpg", "case04_detail_slice_update_02.jpg", "case04_detail_slice_update_03.jpg", "case04_detail_slice_update_04.jpg"],
+                detailSlices: ["opt/case04_detail_slice_update_01.webp", "opt/case04_detail_slice_update_02.webp", "opt/case04_detail_slice_update_03.webp", "opt/case04_detail_slice_update_04.webp"],
                 motion: []
             },
             {
@@ -3098,13 +3113,13 @@
                 en: "Electronic Product 3D Rendering",
                 time: "2023.3 - 2024.9",
                 role: "C4D 建模 / Redshift 渲染 / 海外提案",
-                hero: "case05_hero_motion_19x6.gif",
-                preview: "case05_render_05.jpg",
+                hero: "opt/case05_hero_motion_19x6.mp4",
+                preview: "opt/case05_render_05.webp",
                 summary: "面向美国客户完成产品建模渲染、包装展示、卖点图与动态产品演示。",
                 highlightWork: "我负责产品建模渲染、提案视觉、海报、详情页、包装和运营图的设计输出。通过 3D 渲染把产品外观、材质和卖点转化为更适合客户评审和商业展示的视觉素材。",
                 highlightOutcome: "参与千万级商业产品视觉支持，为海外客户沟通、产品展示和线上运营提供稳定的 3D 视觉资产。",
                 viNote: "电子产品案例没有单独 VI 文件夹，因此以产品识别、包装和渲染主图作为品牌开场，展示产品结构、材质、光感和商业提案能力。",
-                vi: ["case05_render_05.jpg", "case05_render_01.jpg", "case05_render_08.jpg", "case05_render_10.jpg"],
+                vi: ["opt/case05_render_05.webp", "opt/case05_render_01.webp", "opt/case05_render_08.webp", "opt/case05_render_10.webp"],
                 meta: [
                     ["Brand", "富伦科技有限公司"],
                     ["Role", "产品渲染、提案策划、海报、详情页、包装、运营图"],
@@ -3119,44 +3134,48 @@
                     ["Outcome", "参与千万级商业产品视觉支持，为海外客户沟通、产品展示和线上运营提供稳定的 3D 视觉资产。"]
                 ],
                 works: [
-                    ["case05_render_01.jpg", "tall"],
-                    ["case05_render_02.jpg", "tall"],
-                    ["case05_render_03.jpg", "tall"],
-                    ["case05_render_04.jpg", "tall"],
-                    ["case05_render_05.jpg", "wide"],
-                    ["case05_render_08.jpg", "wide"],
-                    ["case05_render_10.jpg", "tall"],
-                    ["case05_render_12.jpg", "tall"],
-                    ["case05_daily_01.jpg", ""],
-                    ["case05_daily_02.jpg", ""]
+                    ["opt/case05_render_01.webp", "tall"],
+                    ["opt/case05_render_02.webp", "tall"],
+                    ["opt/case05_render_03.webp", "tall"],
+                    ["opt/case05_render_04.webp", "tall"],
+                    ["opt/case05_render_05.webp", "wide"],
+                    ["opt/case05_render_08.webp", "wide"],
+                    ["opt/case05_render_10.webp", "tall"],
+                    ["opt/case05_render_12.webp", "tall"],
+                    ["opt/case05_daily_01.webp", ""],
+                    ["opt/case05_daily_02.webp", ""]
                 ],
                 motion: [
-                    ["motion_electronic_product_16x9_01.gif", "Product Motion Preview", "把静态电子烟渲染图延展为短片段，展示产品细节、旋转和动态演示的提案潜力。"],
-                    ["motion_electronic_product_16x9_02.gif", "AI Product Advertisement", "通过短 GIF 呈现产品广告化氛围，用于海外提案和线上运营的动态补充。"]
+                    ["opt/motion_electronic_product_16x9_01.mp4", "Product Motion Preview", "把静态电子烟渲染图延展为短片段，展示产品细节、旋转和动态演示的提案潜力。"],
+                    ["opt/motion_electronic_product_16x9_02.mp4", "AI Product Advertisement", "通过短 GIF 呈现产品广告化氛围，用于海外提案和线上运营的动态补充。"]
                 ]
             }
         ];
 
         const gridItems = [
-            ["practice_01.jpg", "", "Perfume Render 01"],
-            ["practice_02.jpg", "", "Perfume Render 02"],
-            ["practice_03.jpg", "wide", "Perfume Still Life"],
-            ["practice_04.jpg", "wide", "Perfume Scene"],
-            ["practice_05.jpg", "", "Skincare Render 01"],
-            ["practice_06.jpg", "", "Skincare Render 02"],
-            ["practice_07.jpg", "", "Skincare Render 03"],
-            ["practice_08.jpg", "", "Skincare Render 04"],
-            ["practice_09.jpg", "", "Pet Packaging 01"],
-            ["practice_10.jpg", "", "Pet Packaging 02"],
-            ["practice_11.jpg", "", "Pet Packaging 03"],
-            ["practice_12.jpg", "tall", "Daily Poster 01"],
-            ["practice_13.jpg", "tall", "Daily Poster 02"],
-            ["practice_14.jpg", "tall", "Daily Poster 03"],
-            ["practice_15.jpg", "tall", "Daily Poster 04"],
-            ["practice_16.jpg", "tall", "Daily Poster 05"]
+            ["opt/practice_01.webp", "", "Perfume Render 01"],
+            ["opt/practice_02.webp", "", "Perfume Render 02"],
+            ["opt/practice_03.webp", "wide", "Perfume Still Life"],
+            ["opt/practice_04.webp", "wide", "Perfume Scene"],
+            ["opt/practice_05.webp", "", "Skincare Render 01"],
+            ["opt/practice_06.webp", "", "Skincare Render 02"],
+            ["opt/practice_07.webp", "", "Skincare Render 03"],
+            ["opt/practice_08.webp", "", "Skincare Render 04"],
+            ["opt/practice_09.webp", "", "Pet Packaging 01"],
+            ["opt/practice_10.webp", "", "Pet Packaging 02"],
+            ["opt/practice_11.webp", "", "Pet Packaging 03"],
+            ["opt/practice_12.webp", "tall", "Daily Poster 01"],
+            ["opt/practice_13.webp", "tall", "Daily Poster 02"],
+            ["opt/practice_14.webp", "tall", "Daily Poster 03"],
+            ["opt/practice_15.webp", "tall", "Daily Poster 04"],
+            ["opt/practice_16.webp", "tall", "Daily Poster 05"]
         ];
 
-        const img = (name, alt = "") => `<img src="${A + name}" alt="${alt}" loading="lazy">`;
+        const isVideoFile = name => /\.(mp4|webm|mov)$/i.test(name);
+        const BLANK_PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        const img = (name, alt = "") => isVideoFile(name)
+            ? `<video class="lazy-video" data-src="${A + name}" autoplay muted loop playsinline preload="none" aria-label="${alt}"></video>`
+            : `<img class="lazy-img" src="${BLANK_PIXEL}" data-src="${A + name}" alt="${alt}" loading="lazy" decoding="async">`;
 
         function renderWorks(item) {
             if (item.workGroups && item.workGroups.length) {
@@ -3319,7 +3338,7 @@
                                         <article class="motion-card ${src.includes("motion_fashion_lookbook_") ? "is-portrait" : ""} ${isVideo ? "is-video" : ""}">
                                             ${isVideo ? `
                                                 <div class="motion-media hoverable">
-                                                    <video src="${A + src}" autoplay muted loop playsinline preload="metadata"></video>
+                                                    <video class="lazy-video" data-src="${A + src}" autoplay muted loop playsinline preload="none"></video>
                                                 </div>
                                             ` : `
                                                 <button class="hoverable" type="button" data-lightbox="${A + src}">
@@ -3365,30 +3384,92 @@
         function setupLightbox() {
             const lightbox = document.getElementById("lightbox");
             const lightboxImg = lightbox.querySelector("img");
+            const lightboxVideo = lightbox.querySelector("video");
             const close = lightbox.querySelector("button");
+            const closeLightbox = () => {
+                lightbox.classList.remove("is-open");
+                lightboxImg.removeAttribute("src");
+                lightboxImg.style.display = "";
+                lightboxVideo.pause();
+                lightboxVideo.removeAttribute("src");
+                lightboxVideo.load();
+                lightboxVideo.style.display = "none";
+            };
             document.addEventListener("click", event => {
                 const target = event.target.closest("[data-lightbox]");
                 if (!target) return;
                 event.preventDefault();
-                lightboxImg.src = target.dataset.lightbox;
+                const src = target.dataset.lightbox;
+                if (isVideoFile(src)) {
+                    lightboxImg.removeAttribute("src");
+                    lightboxImg.style.display = "none";
+                    lightboxVideo.src = src;
+                    lightboxVideo.style.display = "block";
+                    lightboxVideo.play().catch(() => {});
+                } else {
+                    lightboxVideo.pause();
+                    lightboxVideo.removeAttribute("src");
+                    lightboxVideo.style.display = "none";
+                    lightboxImg.src = src;
+                    lightboxImg.style.display = "";
+                }
                 lightbox.classList.add("is-open");
             });
-            close.addEventListener("click", () => {
-                lightbox.classList.remove("is-open");
-                lightboxImg.src = "";
-            });
+            close.addEventListener("click", closeLightbox);
             lightbox.addEventListener("click", event => {
                 if (event.target === lightbox) {
-                    lightbox.classList.remove("is-open");
-                    lightboxImg.src = "";
+                    closeLightbox();
                 }
             });
             window.addEventListener("keydown", event => {
                 if (event.key === "Escape") {
-                    lightbox.classList.remove("is-open");
-                    lightboxImg.src = "";
+                    closeLightbox();
                 }
             });
+        }
+
+        function setupLazyVideos() {
+            const videos = Array.from(document.querySelectorAll("video[data-src]"));
+            const loadVideo = video => {
+                if (video.src) return;
+                video.src = video.dataset.src;
+                video.removeAttribute("data-src");
+                video.load();
+                if (video.autoplay) video.play().catch(() => {});
+            };
+            if (!("IntersectionObserver" in window)) {
+                videos.forEach(loadVideo);
+                return;
+            }
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    loadVideo(entry.target);
+                    observer.unobserve(entry.target);
+                });
+            }, { rootMargin: "1200px 0px" });
+            videos.forEach(video => observer.observe(video));
+        }
+
+        function setupLazyImages() {
+            const images = Array.from(document.querySelectorAll("img[data-src]"));
+            const loadImage = image => {
+                if (!image.dataset.src) return;
+                image.src = image.dataset.src;
+                image.removeAttribute("data-src");
+            };
+            if (!("IntersectionObserver" in window)) {
+                images.forEach(loadImage);
+                return;
+            }
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    loadImage(entry.target);
+                    observer.unobserve(entry.target);
+                });
+            }, { rootMargin: "1800px 0px" });
+            images.forEach(image => observer.observe(image));
         }
 
         function setupCursor() {
@@ -3614,7 +3695,7 @@
                 gl.uniform1f(isLoaded, 1);
                 requestAnimationFrame(() => document.body.classList.add("webgl-ready"));
             };
-            image.src = window.innerWidth <= 768 ? "assets/portfolio/fashion-week-pano-mobile.jpg" : "assets/portfolio/fashion-week-pano.png";
+            image.src = window.innerWidth <= 768 ? "assets/portfolio/opt/fashion-week-pano-mobile.webp" : "assets/portfolio/opt/fashion-week-pano.webp";
 
             const stops = [0.5, -1.57, -3.58];
             const pitches = [0.025, -0.022, 0.018];
@@ -3895,6 +3976,8 @@
         renderCases();
         setupHoverPreview();
         setupLightbox();
+        setupLazyImages();
+        setupLazyVideos();
         setupCursor();
     </script>
 </body>
